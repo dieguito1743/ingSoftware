@@ -1,0 +1,9 @@
+COPIA LOS ARCHIVOS:
+LICENSE
+oc.exe
+en alguna carpeta X
+Supongamos que la carpeta es:
+E:\Archivos de programa\OpenshiftCLIclient
+luego agregar esta dirección a las variables de entorno del sistema.
+Panel de control>Sistema y seguridad>Sistema>Configuracion avanzada del sistema>Opciones Avanzadas>variables de entorno>Path : agregar la dirección donde coloco el oc.exe
+Si tiene direcciones en Path separelas por ";"
