@@ -9,5 +9,13 @@
     </head>
     <body>
         <h1>Hello World!</h1>
+		<p>localhost:8080/IngSoftware/cursos</p>
+		<p>localhost:8080/IngSoftware/cursos/{id}</p>
+		<p>localhost:8080/IngSoftware/profesores</p>
+		<p>localhost:8080/IngSoftware/profesores/{id}</p>
+		<p>localhost:8080/IngSoftware/disponibilidades</p>
+		<p>localhost:8080/IngSoftware/disponibilidades/{id}</p>
+		<p>localhost:8080/IngSoftware/horas_cursos</p>
+		<p>localhost:8080/IngSoftware/horas_cursos/{id}</p>
     </body>
 </html>
