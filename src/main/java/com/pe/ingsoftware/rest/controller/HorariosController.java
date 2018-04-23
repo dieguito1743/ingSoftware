@@ -42,7 +42,9 @@ public class HorariosController {
     public void insertar(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, @RequestBody String jsonEntrada) {
         try {
             HorariosDTO objetoDTO = (HorariosDTO) jsonTransformer.fromJSON(jsonEntrada, HorariosDTO.class);
-            if (crud.insertar(objetoDTO) > 0) {
+            int id;
+            if ((id = crud.insertar(objetoDTO)) > 0) {
+                objetoDTO.setIdhorarios(id);
                 String jsonSalida = jsonTransformer.toJson(objetoDTO);
 
                 httpServletResponse.setStatus(HttpServletResponse.SC_OK);
