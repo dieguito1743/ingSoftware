@@ -25,10 +25,10 @@ import org.springframework.stereotype.Component;
 @Component("profesores")
 public class ProfesoresDAO implements IBDCrud<ProfesoresDTO> {
 
-    private static final String SQL_SELECT_WHERE = "SELECT * FROM PROFESORES WHERE idprofesor = ?";
-    private static final String SQL_SELECT_ALL = "SELECT * FROM PROFESORES";
-    private static String SQL_CONSULTAR_UNO = "SELECT * FROM PROFESORES WHERE";
-    private static String SQL_CONSULTAR_TODO_DE = "SELECT * FROM PROFESORES WHERE";
+    private static final String SQL_SELECT_WHERE = "SELECT * FROM PROFESORES WHERE idprofesor = ? ";
+    private static final String SQL_SELECT_ALL = "SELECT * FROM PROFESORES ";
+    private static String SQL_CONSULTAR_UNO = "SELECT * FROM PROFESORES WHERE ";
+    private static String SQL_CONSULTAR_TODO_DE = "SELECT * FROM PROFESORES WHERE ";
 
     private static final Conexion cnn = Conexion.crearConexion();
 
@@ -103,7 +103,7 @@ public class ProfesoresDAO implements IBDCrud<ProfesoresDTO> {
     }
 
     @Override
-    public ProfesoresDTO consultarUno(Object campo, Object valorCampo, int tipoCampo) {
+    public ProfesoresDTO consultarUno(Object campo, Object valorCampo, int tipoCampo) throws BussinessException{
         SQL_CONSULTAR_UNO = SQL_CONSULTAR_UNO + campo.toString() + " = ?";
         PreparedStatement ps;
         ResultSet rs;
@@ -148,7 +148,7 @@ public class ProfesoresDAO implements IBDCrud<ProfesoresDTO> {
     }
 
     @Override
-    public ArrayList<ProfesoresDTO> consultarTodoDe(Object campo, Object valorCampo, int tipoCampo) {
+    public ArrayList<ProfesoresDTO> consultarTodoDe(Object campo, Object valorCampo, int tipoCampo) throws BussinessException{
         ArrayList<ProfesoresDTO> profesorArrayList = new ArrayList();
         SQL_CONSULTAR_TODO_DE = SQL_CONSULTAR_TODO_DE + campo.toString() + " = ?";
         PreparedStatement ps;
@@ -192,6 +192,21 @@ public class ProfesoresDAO implements IBDCrud<ProfesoresDTO> {
             cnn.cerrarConexion();
         }
         return profesorArrayList;
+    }
+
+    @Override
+    public ArrayList<ProfesoresDTO> selectPrograma() throws BussinessException{
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public ArrayList<ProfesoresDTO> selectPlan(String filtro) throws BussinessException{
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public ArrayList<ProfesoresDTO> consultarTodoDe(Object campo1, Object valorCampo1, int tipoCampo1, Object campo2, Object valorCampo2, int tipoCampo2) throws BussinessException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

@@ -25,10 +25,10 @@ import org.springframework.stereotype.Component;
 @Component("preferencias_cursos_profesores")
 public class Preferencias_cursos_profesoresDAO implements IBDCrud<Preferencias_cursos_profesoresDTO> {
 
-    private static final String SQL_SELECT_WHERE = "SELECT * FROM preferencias_cursos_profesores WHERE idcurso = ?";
-    private static final String SQL_SELECT_ALL = "SELECT * FROM preferencias_cursos_profesores";
-    private static String SQL_CONSULTAR_UNO = "SELECT * FROM preferencias_cursos_profesores WHERE";
-    private static String SQL_CONSULTAR_TODO_DE = "SELECT * FROM preferencias_cursos_profesores WHERE";
+    private static final String SQL_SELECT_WHERE = "SELECT * FROM preferencias_cursos_profesores WHERE idcurso = ? ";
+    private static final String SQL_SELECT_ALL = "SELECT * FROM preferencias_cursos_profesores ";
+    private static String SQL_CONSULTAR_UNO = "SELECT * FROM preferencias_cursos_profesores WHERE ";
+    private static String SQL_CONSULTAR_TODO_DE = "SELECT * FROM preferencias_cursos_profesores WHERE ";
 
     private static final Conexion cnn = Conexion.crearConexion();
 
@@ -100,8 +100,8 @@ public class Preferencias_cursos_profesoresDAO implements IBDCrud<Preferencias_c
     }
 
     @Override
-    public Preferencias_cursos_profesoresDTO consultarUno(Object campo, Object valorCampo, int tipoCampo) {
-        SQL_CONSULTAR_UNO = SQL_CONSULTAR_UNO + campo.toString() + " = ?";
+    public Preferencias_cursos_profesoresDTO consultarUno(Object campo, Object valorCampo, int tipoCampo) throws BussinessException{
+        SQL_CONSULTAR_UNO = "SELECT * FROM CURSOS WHERE " + campo.toString() + " = ?";
         PreparedStatement ps;
         ResultSet rs;
         Preferencias_cursos_profesoresDTO preferencias = new Preferencias_cursos_profesoresDTO();
@@ -142,9 +142,9 @@ public class Preferencias_cursos_profesoresDAO implements IBDCrud<Preferencias_c
     }
 
     @Override
-    public ArrayList<Preferencias_cursos_profesoresDTO> consultarTodoDe(Object campo, Object valorCampo, int tipoCampo) {
+    public ArrayList<Preferencias_cursos_profesoresDTO> consultarTodoDe(Object campo, Object valorCampo, int tipoCampo) throws BussinessException{
         ArrayList<Preferencias_cursos_profesoresDTO> ArrayList = new ArrayList();
-        SQL_CONSULTAR_TODO_DE = SQL_CONSULTAR_TODO_DE + campo.toString() + " = ?";
+        SQL_CONSULTAR_TODO_DE = "SELECT * FROM CURSOS WHERE " + campo.toString() + " = ?";
         PreparedStatement ps;
         ResultSet rs;
         Preferencias_cursos_profesoresDTO preferencias;
@@ -186,6 +186,21 @@ public class Preferencias_cursos_profesoresDAO implements IBDCrud<Preferencias_c
             cnn.cerrarConexion();
         }
         return ArrayList;
+    }
+
+    @Override
+    public ArrayList<Preferencias_cursos_profesoresDTO> selectPrograma() throws BussinessException{
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public ArrayList<Preferencias_cursos_profesoresDTO> selectPlan(String filtro) throws BussinessException{
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public ArrayList<Preferencias_cursos_profesoresDTO> consultarTodoDe(Object campo1, Object valorCampo1, int tipoCampo1, Object campo2, Object valorCampo2, int tipoCampo2) throws BussinessException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

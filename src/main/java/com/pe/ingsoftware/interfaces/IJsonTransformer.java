@@ -4,13 +4,17 @@
  */
 package com.pe.ingsoftware.interfaces;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author dbermudez
  */
 public interface IJsonTransformer {
-    
+
     String toJson(Object data);
 
-     <Clase> Clase fromJSON(String json, Class<Clase> clase);
+    <Clase> Clase fromJSON(String json, Class<Clase> clase);
+
+    String toJson(ArrayList<String> value);
 }

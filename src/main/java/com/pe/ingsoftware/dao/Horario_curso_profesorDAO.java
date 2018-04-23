@@ -22,8 +22,8 @@ import org.springframework.stereotype.Component;
  */
 @Component("horario_curso_profesor")
 public class Horario_curso_profesorDAO implements IBDCrud<Horario_curso_profesorDTO> {
-    
-    private static final String SQL_INSERT = "INSERT INTO horario_curso_profesor (idcurso, idprofesor, idhorario) VALUES (?,?,?)";
+
+    private static final String SQL_INSERT = "INSERT INTO horario_curso_profesor (idcurso, idprofesor, idhorario) VALUES (?,?,?) ";
 
     private static final Conexion cnn = Conexion.crearConexion();
 
@@ -70,12 +70,27 @@ public class Horario_curso_profesorDAO implements IBDCrud<Horario_curso_profesor
     }
 
     @Override
-    public Horario_curso_profesorDTO consultarUno(Object campo, Object valorCampo, int tipoCampo) {
+    public Horario_curso_profesorDTO consultarUno(Object campo, Object valorCampo, int tipoCampo) throws BussinessException{
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public ArrayList<Horario_curso_profesorDTO> consultarTodoDe(Object campo, Object valorCampo, int tipoCampo) {
+    public ArrayList<Horario_curso_profesorDTO> consultarTodoDe(Object campo, Object valorCampo, int tipoCampo) throws BussinessException{
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public ArrayList<Horario_curso_profesorDTO> selectPrograma() throws BussinessException{
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public ArrayList<Horario_curso_profesorDTO> selectPlan(String filtro) throws BussinessException{
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public ArrayList<Horario_curso_profesorDTO> consultarTodoDe(Object campo1, Object valorCampo1, int tipoCampo1, Object campo2, Object valorCampo2, int tipoCampo2) throws BussinessException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

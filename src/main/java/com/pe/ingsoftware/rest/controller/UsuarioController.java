@@ -37,8 +37,7 @@ public class UsuarioController {
     @Qualifier("usuario")
     private IBDCrud crud;
 
-    @RequestMapping(value = "/usuario/{id}", method = RequestMethod.GET)
-    /*, produces = "application/json") para otra version de spring*/
+    @RequestMapping(value = "/usuario/{id}", method = RequestMethod.GET, produces = "application/json")
     public void consultarUno(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, @PathVariable("id") String id) {
         try {
             UsuarioDTO objetoDTO = (UsuarioDTO) crud.consultarUno(id);
@@ -72,12 +71,11 @@ public class UsuarioController {
 
     }
 
-    @RequestMapping(value = "/usuario", method = RequestMethod.POST)
-    /*, consumes = "application/json", produces = "application/json") para otra version de spring*/
+    @RequestMapping(value = "/usuario", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
     public void insertar(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, @RequestBody String jsonEntrada) {
         try {
             UsuarioDTO objetoDTO = (UsuarioDTO) jsonTransformer.fromJSON(jsonEntrada, UsuarioDTO.class);
-            if (crud.insertar(objetoDTO)>0) {
+            if (crud.insertar(objetoDTO) > 0) {
                 String jsonSalida = jsonTransformer.toJson(objetoDTO);
 
                 httpServletResponse.setStatus(HttpServletResponse.SC_OK);
@@ -112,8 +110,7 @@ public class UsuarioController {
         }
     }
 
-    @RequestMapping(value = "/usuario", method = RequestMethod.GET)
-    /*, produces = "application/json") para otra version de spring*/
+    @RequestMapping(value = "/usuario", method = RequestMethod.GET, produces = "application/json")
     public void consultarTodo(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
         try {
             ArrayList<UsuarioDTO> arrayList = crud.consultarTodo();
@@ -147,8 +144,7 @@ public class UsuarioController {
 
     }
 
-    @RequestMapping(value = "/usuario/{id}", method = RequestMethod.PUT)
-    /*, consumes = "application/json", produces = "application/json")*/
+    @RequestMapping(value = "/usuario/{id}", method = RequestMethod.PUT, consumes = "application/json", produces = "application/json")
     public void actualizar(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, @RequestBody String jsonEntrada, @PathVariable("id") String id) {
         try {
             UsuarioDTO objetoDTO = (UsuarioDTO) jsonTransformer.fromJSON(jsonEntrada, UsuarioDTO.class);
@@ -178,7 +174,6 @@ public class UsuarioController {
                 //Logger.getLogger(UsuarioController.class.getName()).log(Level.SEVERE, null, ex1);
             }
 
-
         } catch (Exception ex) {
             httpServletResponse.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             httpServletResponse.setContentType("text/plain; charset=UTF-8");
@@ -190,8 +185,7 @@ public class UsuarioController {
         }
     }
 
-    @RequestMapping(value = "/usuario/{id}", method = RequestMethod.DELETE)
-    /*, produces = "application/json")*/
+    @RequestMapping(value = "/usuario/{id}", method = RequestMethod.DELETE, produces = "application/json")
     public void borrar(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, @PathVariable("id") String id) {
         try {
             if (crud.borrar(id)) {
@@ -218,8 +212,7 @@ public class UsuarioController {
         }
     }
 
-    @RequestMapping(value = "/usuario/testing", method = RequestMethod.GET)
-    /*, produces = "application/json") para otra version de spring*/
+    @RequestMapping(value = "/usuario/testing", method = RequestMethod.GET, produces = "application/json")
     public void testing(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
         try {
             UsuarioDTO objetoDTO = new UsuarioDTO("13200096", "Diego Bermudez", "dieguito.1743@gmail.com", 24);

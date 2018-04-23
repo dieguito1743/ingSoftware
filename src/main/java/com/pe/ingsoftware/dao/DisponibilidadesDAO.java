@@ -25,10 +25,10 @@ import org.springframework.stereotype.Component;
 @Component("disponibilidades")
 public class DisponibilidadesDAO implements IBDCrud<DisponibilidadesDTO> {
 
-    private static final String SQL_SELECT_WHERE = "SELECT * FROM DISPONIBILIDADES WHERE iddisponibilidad = ?";
-    private static final String SQL_SELECT_ALL = "SELECT * FROM DISPONIBILIDADES";
-    private static String SQL_CONSULTAR_UNO = "SELECT * FROM DISPONIBILIDADES WHERE";
-    private static String SQL_CONSULTAR_TODO_DE = "SELECT * FROM DISPONIBILIDADES WHERE";
+    private static final String SQL_SELECT_WHERE = "SELECT * FROM DISPONIBILIDADES WHERE iddisponibilidad = ? ";
+    private static final String SQL_SELECT_ALL = "SELECT * FROM DISPONIBILIDADES ";
+    private static String SQL_CONSULTAR_UNO = "SELECT * FROM DISPONIBILIDADES WHERE ";
+    private static String SQL_CONSULTAR_TODO_DE = "SELECT * FROM DISPONIBILIDADES WHERE ";
 
     private static final Conexion cnn = Conexion.crearConexion();
 
@@ -104,8 +104,8 @@ public class DisponibilidadesDAO implements IBDCrud<DisponibilidadesDTO> {
     }
 
     @Override
-    public DisponibilidadesDTO consultarUno(Object campo, Object valorCampo, int tipoCampo) {
-        SQL_CONSULTAR_UNO = SQL_CONSULTAR_UNO + campo.toString() + " = ?";
+    public DisponibilidadesDTO consultarUno(Object campo, Object valorCampo, int tipoCampo) throws BussinessException{
+        SQL_CONSULTAR_UNO = "SELECT * FROM CURSOS WHERE " + campo.toString() + " = ?";
         PreparedStatement ps;
         ResultSet rs;
         DisponibilidadesDTO disponibilidad = new DisponibilidadesDTO();
@@ -150,9 +150,9 @@ public class DisponibilidadesDAO implements IBDCrud<DisponibilidadesDTO> {
     }
 
     @Override
-    public ArrayList<DisponibilidadesDTO> consultarTodoDe(Object campo, Object valorCampo, int tipoCampo) {
+    public ArrayList<DisponibilidadesDTO> consultarTodoDe(Object campo, Object valorCampo, int tipoCampo) throws BussinessException{
         ArrayList<DisponibilidadesDTO> ArrayList = new ArrayList();
-        SQL_CONSULTAR_TODO_DE = SQL_CONSULTAR_TODO_DE + campo.toString() + " = ?";
+        SQL_CONSULTAR_TODO_DE = "SELECT * FROM CURSOS WHERE " + campo.toString() + " = ?";
         PreparedStatement ps;
         ResultSet rs;
         DisponibilidadesDTO disponibilidad;
@@ -194,6 +194,21 @@ public class DisponibilidadesDAO implements IBDCrud<DisponibilidadesDTO> {
             cnn.cerrarConexion();
         }
         return ArrayList;
+    }
+
+    @Override
+    public ArrayList<DisponibilidadesDTO> selectPrograma() throws BussinessException{
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public ArrayList<DisponibilidadesDTO> selectPlan(String filtro) throws BussinessException{
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public ArrayList<DisponibilidadesDTO> consultarTodoDe(Object campo1, Object valorCampo1, int tipoCampo1, Object campo2, Object valorCampo2, int tipoCampo2) throws BussinessException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

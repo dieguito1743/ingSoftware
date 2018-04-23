@@ -38,8 +38,7 @@ public class HorariosController {
     @Qualifier("horarios")
     private IBDCrud crud;
 
-    @RequestMapping(value = "/horarios", method = RequestMethod.POST)
-    /*, consumes = "application/json", produces = "application/json") para otra version de spring*/
+    @RequestMapping(value = "/horarios", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
     public void insertar(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, @RequestBody String jsonEntrada) {
         try {
             HorariosDTO objetoDTO = (HorariosDTO) jsonTransformer.fromJSON(jsonEntrada, HorariosDTO.class);
@@ -78,8 +77,7 @@ public class HorariosController {
         }
     }
 
-    @RequestMapping(value = "/horarios/{id}", method = RequestMethod.GET)
-    /*, produces = "application/json") para otra version de spring*/
+    @RequestMapping(value = "/horarios/{id}", method = RequestMethod.GET, produces = "application/json")
     public void consultarUno(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, @PathVariable("id") String id) {
         try {
             HorariosDTO objetoDTO = (HorariosDTO) crud.consultarUno(id);
@@ -111,8 +109,7 @@ public class HorariosController {
         }
     }
 
-    @RequestMapping(value = "/horarios", method = RequestMethod.GET)
-    /*, produces = "application/json") para otra version de spring*/
+    @RequestMapping(value = "/horarios", method = RequestMethod.GET, produces = "application/json")
     public void consultarTodo(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
         try {
             ArrayList<HorariosDTO> arrayList = crud.consultarTodo();

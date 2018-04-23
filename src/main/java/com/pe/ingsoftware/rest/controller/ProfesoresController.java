@@ -37,8 +37,7 @@ public class ProfesoresController {
     @Qualifier("profesores")
     private IBDCrud crud;
 
-    @RequestMapping(value = "/profesores", method = RequestMethod.GET)
-    /*, produces = "application/json") para otra version de spring*/
+    @RequestMapping(value = "/profesores", method = RequestMethod.GET, produces = "application/json")
     public void consultarTodo(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
         try {
             ArrayList<ProfesoresDTO> arrayList = crud.consultarTodo();
@@ -71,8 +70,7 @@ public class ProfesoresController {
         }
     }
 
-    @RequestMapping(value = "/profesores/{id}", method = RequestMethod.GET)
-    /*, produces = "application/json") para otra version de spring*/
+    @RequestMapping(value = "/profesores/{id}", method = RequestMethod.GET, produces = "application/json")
     public void consultarUno(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, @PathVariable("id") String id) {
         try {
             ProfesoresDTO objetoDTO = (ProfesoresDTO) crud.consultarUno(id);

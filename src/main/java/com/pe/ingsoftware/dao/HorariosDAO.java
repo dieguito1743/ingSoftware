@@ -25,11 +25,11 @@ import org.springframework.stereotype.Component;
 @Component("horarios")
 public class HorariosDAO implements IBDCrud<HorariosDTO> {
 
-    private static final String SQL_INSERT = "INSERT INTO HORARIOS (cyclehorario, dayhorario, timestarthorario, timeendhorario, statushorario) VALUES (?,?,?)";
-    private static final String SQL_SELECT_WHERE = "SELECT * FROM HORARIOS WHERE idhorario = ?";
-    private static final String SQL_SELECT_ALL = "SELECT * FROM HORARIOS";
-    private static String SQL_CONSULTAR_UNO = "SELECT * FROM HORARIOS WHERE";
-    private static String SQL_CONSULTAR_TODO_DE = "SELECT * FROM HORARIOS WHERE";
+    private static final String SQL_INSERT = "INSERT INTO HORARIOS (cyclehorario, dayhorario, timestarthorario, timeendhorario, statushorario) VALUES (?,?,?) ";
+    private static final String SQL_SELECT_WHERE = "SELECT * FROM HORARIOS WHERE idhorario = ? ";
+    private static final String SQL_SELECT_ALL = "SELECT * FROM HORARIOS ";
+    private static String SQL_CONSULTAR_UNO = "SELECT * FROM HORARIOS WHERE ";
+    private static String SQL_CONSULTAR_TODO_DE = "SELECT * FROM HORARIOS WHERE ";
 
     private static final Conexion cnn = Conexion.crearConexion();
 
@@ -128,8 +128,8 @@ public class HorariosDAO implements IBDCrud<HorariosDTO> {
     }
 
     @Override
-    public HorariosDTO consultarUno(Object campo, Object valorCampo, int tipoCampo) {
-        SQL_CONSULTAR_UNO = SQL_CONSULTAR_UNO + campo.toString() + " = ?";
+    public HorariosDTO consultarUno(Object campo, Object valorCampo, int tipoCampo) throws BussinessException{
+        SQL_CONSULTAR_UNO = "SELECT * FROM CURSOS WHERE " + campo.toString() + " = ?";
         PreparedStatement ps;
         ResultSet rs;
         HorariosDTO horario = new HorariosDTO();
@@ -174,9 +174,9 @@ public class HorariosDAO implements IBDCrud<HorariosDTO> {
     }
 
     @Override
-    public ArrayList<HorariosDTO> consultarTodoDe(Object campo, Object valorCampo, int tipoCampo) {
+    public ArrayList<HorariosDTO> consultarTodoDe(Object campo, Object valorCampo, int tipoCampo) throws BussinessException{
         ArrayList<HorariosDTO> ArrayList = new ArrayList();
-        SQL_CONSULTAR_TODO_DE = SQL_CONSULTAR_TODO_DE + campo.toString() + " = ?";
+        SQL_CONSULTAR_TODO_DE = "SELECT * FROM CURSOS WHERE " + campo.toString() + " = ?";
         PreparedStatement ps;
         ResultSet rs;
         HorariosDTO horario;
@@ -218,6 +218,21 @@ public class HorariosDAO implements IBDCrud<HorariosDTO> {
             cnn.cerrarConexion();
         }
         return ArrayList;
+    }
+
+    @Override
+    public ArrayList<HorariosDTO> selectPrograma() throws BussinessException{
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public ArrayList<HorariosDTO> selectPlan(String filtro) throws BussinessException{
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public ArrayList<HorariosDTO> consultarTodoDe(Object campo1, Object valorCampo1, int tipoCampo1, Object campo2, Object valorCampo2, int tipoCampo2) throws BussinessException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

@@ -25,10 +25,10 @@ import org.springframework.stereotype.Component;
 @Component("aulas")
 public class AulasDAO implements IBDCrud<AulasDTO> {
 
-    private static final String SQL_SELECT_WHERE = "SELECT * FROM AULAS WHERE idaula = ?";
-    private static final String SQL_SELECT_ALL = "SELECT * FROM AULAS";
-    private static String SQL_CONSULTAR_UNO = "SELECT * FROM AULAS WHERE";
-    private static String SQL_CONSULTAR_TODO_DE = "SELECT * FROM AULAS WHERE";
+    private static final String SQL_SELECT_WHERE = "SELECT * FROM AULAS WHERE idaula = ? ";
+    private static final String SQL_SELECT_ALL = "SELECT * FROM AULAS ";
+    private static String SQL_CONSULTAR_UNO = "SELECT * FROM AULAS WHERE ";
+    private static String SQL_CONSULTAR_TODO_DE = "SELECT * FROM AULAS WHERE ";
 
     private static final Conexion cnn = Conexion.crearConexion();
 
@@ -104,8 +104,8 @@ public class AulasDAO implements IBDCrud<AulasDTO> {
     }
 
     @Override
-    public AulasDTO consultarUno(Object campo, Object valorCampo, int tipoCampo) {
-        SQL_CONSULTAR_UNO = SQL_CONSULTAR_UNO + campo.toString() + " = ?";
+    public AulasDTO consultarUno(Object campo, Object valorCampo, int tipoCampo) throws BussinessException{
+        SQL_CONSULTAR_UNO = "SELECT * FROM CURSOS WHERE " + campo.toString() + " = ?";
         PreparedStatement ps;
         ResultSet rs;
         AulasDTO aula = new AulasDTO();
@@ -150,9 +150,9 @@ public class AulasDAO implements IBDCrud<AulasDTO> {
     }
 
     @Override
-    public ArrayList<AulasDTO> consultarTodoDe(Object campo, Object valorCampo, int tipoCampo) {
+    public ArrayList<AulasDTO> consultarTodoDe(Object campo, Object valorCampo, int tipoCampo) throws BussinessException{
         ArrayList<AulasDTO> ArrayList = new ArrayList();
-        SQL_CONSULTAR_TODO_DE = SQL_CONSULTAR_TODO_DE + campo.toString() + " = ?";
+        SQL_CONSULTAR_TODO_DE = "SELECT * FROM CURSOS WHERE " + campo.toString() + " = ?";
         PreparedStatement ps;
         ResultSet rs;
         AulasDTO aula;
@@ -194,6 +194,21 @@ public class AulasDAO implements IBDCrud<AulasDTO> {
             cnn.cerrarConexion();
         }
         return ArrayList;
+    }
+
+    @Override
+    public ArrayList<AulasDTO> selectPrograma() throws BussinessException{
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public ArrayList<AulasDTO> selectPlan(String filtro) throws BussinessException{
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public ArrayList<AulasDTO> consultarTodoDe(Object campo1, Object valorCampo1, int tipoCampo1, Object campo2, Object valorCampo2, int tipoCampo2) throws BussinessException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

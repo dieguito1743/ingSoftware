@@ -25,12 +25,73 @@ import org.springframework.stereotype.Component;
 @Component("cursos")
 public class CursosDAO implements IBDCrud<CursosDTO> {
 
-    private static final String SQL_SELECT_WHERE = "SELECT * FROM CURSOS WHERE idcurso = ?";
-    private static final String SQL_SELECT_ALL = "SELECT * FROM CURSOS";
-    private static String SQL_CONSULTAR_UNO = "SELECT * FROM CURSOS WHERE";
-    private static String SQL_CONSULTAR_TODO_DE = "SELECT * FROM CURSOS WHERE";
+    private static final String SQL_SELECT_WHERE = "SELECT * FROM CURSOS WHERE idcurso = ? ";
+    private static final String SQL_SELECT_ALL = "SELECT * FROM CURSOS ";
+    private static String SQL_CONSULTAR_UNO = "SELECT * FROM CURSOS WHERE ";
+    private static String SQL_CONSULTAR_TODO_DE = "SELECT * FROM CURSOS WHERE ";
+    private static final String SQL_SELECT_PROGRAM = "SELECT distinct programcurso FROM cursos ";
+    private static final String SQL_SELET_PLAN = "SELECT distinct plancurso FROM cursos where programcurso = ? ";
 
     private static final Conexion cnn = Conexion.crearConexion();
+
+    @Override
+    public ArrayList<CursosDTO> selectPrograma() throws BussinessException {
+        ArrayList<CursosDTO> ArrayList = new ArrayList();
+        PreparedStatement ps;
+        ResultSet rs;
+        CursosDTO curso;
+        try {
+            ps = cnn.getCnn().prepareStatement(SQL_SELECT_PROGRAM);
+            rs = ps.executeQuery();
+            if (!rs.next()) {
+                ArrayList = null;
+            } else {
+                do {
+                    curso = new CursosDTO();
+                    curso.setProgramcurso(rs.getString(1));
+                    ArrayList.add(curso);
+                } while (rs.next());
+            }
+            return ArrayList;
+        } catch (SQLException ex) {
+            Logger.getLogger(CursosDTO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(CursosDTO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            cnn.cerrarConexion();
+        }
+        return ArrayList;
+    }
+
+    @Override
+    public ArrayList<CursosDTO> selectPlan(String filtro) throws BussinessException {
+        ArrayList<CursosDTO> ArrayList = new ArrayList();
+        PreparedStatement ps;
+        ResultSet rs;
+        CursosDTO curso;
+        try {
+            ps = cnn.getCnn().prepareStatement(SQL_SELET_PLAN);
+            ps.setString(1, filtro);
+            rs = ps.executeQuery();
+            if (!rs.next()) {
+                ArrayList = null;
+            } else {
+                do {
+                    curso = new CursosDTO();
+                    curso.setPlancurso(rs.getString(1));
+                    ArrayList.add(curso);
+                } while (rs.next());
+            }
+            return ArrayList;
+        } catch (SQLException ex) {
+            Logger.getLogger(CursosDTO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(CursosDTO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            cnn.cerrarConexion();
+        }
+        return ArrayList;
+    }
 
     @Override
     public int insertar(CursosDTO objetoNuevo) throws BussinessException {
@@ -105,8 +166,8 @@ public class CursosDAO implements IBDCrud<CursosDTO> {
     }
 
     @Override
-    public CursosDTO consultarUno(Object campo, Object valorCampo, int tipoCampo) {
-        SQL_CONSULTAR_UNO = SQL_CONSULTAR_UNO + campo.toString() + " = ?";
+    public CursosDTO consultarUno(Object campo, Object valorCampo, int tipoCampo) throws BussinessException {
+        SQL_CONSULTAR_UNO = "SELECT * FROM CURSOS WHERE " + campo.toString() + " = ?";
         PreparedStatement ps;
         ResultSet rs;
         CursosDTO curso = new CursosDTO();
@@ -152,9 +213,9 @@ public class CursosDAO implements IBDCrud<CursosDTO> {
     }
 
     @Override
-    public ArrayList<CursosDTO> consultarTodoDe(Object campo, Object valorCampo, int tipoCampo) {
+    public ArrayList<CursosDTO> consultarTodoDe(Object campo, Object valorCampo, int tipoCampo) throws BussinessException {
         ArrayList<CursosDTO> ArrayList = new ArrayList();
-        SQL_CONSULTAR_TODO_DE = SQL_CONSULTAR_TODO_DE + campo.toString() + " = ?";
+        SQL_CONSULTAR_TODO_DE = "SELECT * FROM CURSOS WHERE " + campo.toString() + " = ?";
         PreparedStatement ps;
         ResultSet rs;
         CursosDTO curso;
@@ -176,6 +237,71 @@ public class CursosDAO implements IBDCrud<CursosDTO> {
                     break;
                 default:
                     ps.setString(1, valorCampo.toString());
+                    break;
+            }
+            rs = ps.executeQuery();
+            if (!rs.next()) {
+                ArrayList = null;
+            } else {
+                do {
+                    curso = new CursosDTO(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getInt(7));
+                    ArrayList.add(curso);
+                } while (rs.next());
+            }
+            return ArrayList;
+        } catch (SQLException ex) {
+            Logger.getLogger(CursosDTO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(CursosDTO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            cnn.cerrarConexion();
+        }
+        return ArrayList;
+    }
+
+    @Override
+    public ArrayList<CursosDTO> consultarTodoDe(Object campo1, Object valorCampo1, int tipoCampo1, Object campo2, Object valorCampo2, int tipoCampo2) throws BussinessException {
+        ArrayList<CursosDTO> ArrayList = new ArrayList();
+        SQL_CONSULTAR_TODO_DE = "SELECT * FROM CURSOS WHERE " + campo1.toString() + " = ? and " + campo2.toString() + " = ?";
+        PreparedStatement ps;
+        ResultSet rs;
+        CursosDTO curso;
+        try {
+            ps = cnn.getCnn().prepareStatement(SQL_CONSULTAR_TODO_DE);
+            switch (tipoCampo1) {
+                case 0:
+                    ps.setInt(1, Integer.parseInt(valorCampo1.toString()));
+                    break;
+                case 1:
+                    ps.setDouble(1, Double.parseDouble(valorCampo1.toString()));
+                    break;
+                case 2:
+                    ps.setString(1, valorCampo1.toString());
+                    break;
+                case 3:
+                    Time time = null;
+                    ps.setTime(1, time.valueOf(valorCampo1.toString()));
+                    break;
+                default:
+                    ps.setString(1, valorCampo1.toString());
+                    break;
+            }
+            switch (tipoCampo1) {
+                case 0:
+                    ps.setInt(2, Integer.parseInt(valorCampo2.toString()));
+                    break;
+                case 1:
+                    ps.setDouble(2, Double.parseDouble(valorCampo2.toString()));
+                    break;
+                case 2:
+                    ps.setString(2, valorCampo2.toString());
+                    break;
+                case 3:
+                    Time time = null;
+                    ps.setTime(2, time.valueOf(valorCampo2.toString()));
+                    break;
+                default:
+                    ps.setString(2, valorCampo2.toString());
                     break;
             }
             rs = ps.executeQuery();

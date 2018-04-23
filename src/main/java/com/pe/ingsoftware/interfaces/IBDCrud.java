@@ -95,7 +95,7 @@ public interface IBDCrud<Clase> {
      * @return <b>Objeto</b> retorna un Objeto de la Clase espeficicada en el
      * Constructor.
      */
-    Clase consultarUno(Object campo, Object valorCampo, int tipoCampo);
+    Clase consultarUno(Object campo, Object valorCampo, int tipoCampo) throws BussinessException;
 
     /**
      * Este metodo realiza un 'SELECT * FROM TABLE WHERE CAMPO = valorCampo;'
@@ -114,5 +114,40 @@ public interface IBDCrud<Clase> {
      * Default - String.<br>
      * @return <b>ArrayList</b> retorna un ArrayList de Objetos de la consulta
      */
-    ArrayList<Clase> consultarTodoDe(Object campo, Object valorCampo, int tipoCampo);
+    ArrayList<Clase> consultarTodoDe(Object campo, Object valorCampo, int tipoCampo) throws BussinessException;
+
+    /**
+     * Este metodo realiza un 'SELECT * FROM TABLE WHERE CAMPO = valorCampo;'
+     * <br>
+     * Para invocar a que tabla de la base de datos va, especifique el tipo de
+     * contructor. 'clase' especifica el tipo de contructor.
+     *
+     * @param campo* indica el nombre de la columna o campo del cual se quiere
+     * filtrar
+     * @param valorCampo* indica el valor que va tomar el <b>campo</b>
+     * @param tipoCampo* indica de que tipo dedatos es el campo.<br>
+     * 0 - tipo Int o Integer.<br>
+     * 1 - tipo Double.<br>
+     * 2 - tipo String.<br>
+     * 3 - tipo Time "HH:MM:SS".<br>
+     * Default - String.<br>
+     * @return <b>ArrayList</b> retorna un ArrayList de Objetos de la consulta
+     */
+    ArrayList<Clase> consultarTodoDe(Object campo1, Object valorCampo1, int tipoCampo1, Object campo2, Object valorCampo2, int tipoCampo2) throws BussinessException;
+
+    /**
+     * Este metodo es exclusivo para el DAO cursos, devuelve todo los programas
+     *
+     * @return <b>ArrayList</b> retorna un ArrayList de Objetos de la consulta
+     */
+    ArrayList<Clase> selectPrograma() throws BussinessException;
+
+    /**
+     * Este metodo es exclusivo para el DAO cursos, devuelve todos los planes de
+     * un programa
+     *
+     * @param filtro string que filtra el plan por programa.
+     * @return <b>ArrayList</b> retorna un ArrayList de Objetos de la consulta
+     */
+    ArrayList<Clase> selectPlan(String filtro) throws BussinessException;
 }

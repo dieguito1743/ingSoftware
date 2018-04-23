@@ -41,6 +41,48 @@ public class MainTest {
         //disponibilidadesTest();
         //horas_cursosTest();
         //preferencias_cursos_profesoresTest();
+        listar_programa_cursos();
+        listar_plan_cursos();
+    }
+
+    public static void listar_programa_cursos() {
+        IBDCrud crud = new CursosDAO();
+        IJsonTransformer jsonTransformer = new JsonTransformer();
+        String jsonSalida = "";
+        try {
+            ArrayList<CursosDTO> arrayList = crud.selectPrograma();
+            jsonSalida = jsonTransformer.toJson(arrayList);
+            for (CursosDTO objeto : arrayList) {
+                System.out.println("PROGRAMA: " + objeto.getProgramcurso());
+                System.out.println("");
+            }
+        } catch (BussinessException ex) {
+            List<BussinessMessage> bussinessMessage = ex.getBussinessMessages();
+            jsonSalida = jsonTransformer.toJson(bussinessMessage);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        System.out.println(jsonSalida);
+    }
+
+    public static void listar_plan_cursos() {
+        IBDCrud crud = new CursosDAO();
+        IJsonTransformer jsonTransformer = new JsonTransformer();
+        String jsonSalida = "";
+        try {
+            ArrayList<CursosDTO> arrayList = crud.selectPlan("ISW");
+            jsonSalida = jsonTransformer.toJson(arrayList);
+            for (CursosDTO objeto : arrayList) {
+                System.out.println("PLAN    : " + objeto.getPlancurso());
+                System.out.println("");
+            }
+        } catch (BussinessException ex) {
+            List<BussinessMessage> bussinessMessage = ex.getBussinessMessages();
+            jsonSalida = jsonTransformer.toJson(bussinessMessage);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        System.out.println(jsonSalida);
     }
 
     public static void profesoresTest() {

@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
  */
 @Component("usuario")
 public class UsuarioDAO implements IBDCrud<UsuarioDTO> {
-    
+
     private static final Conexion cnn = Conexion.crearConexion();
 
     public UsuarioDAO() {
@@ -49,12 +49,27 @@ public class UsuarioDAO implements IBDCrud<UsuarioDTO> {
     }
 
     @Override
-    public UsuarioDTO consultarUno(Object campo, Object valorCampo, int tipoCampo) {
+    public UsuarioDTO consultarUno(Object campo, Object valorCampo, int tipoCampo) throws BussinessException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public ArrayList<UsuarioDTO> consultarTodoDe(Object campo, Object valorCampo, int tipoCampo) {
+    public ArrayList<UsuarioDTO> consultarTodoDe(Object campo, Object valorCampo, int tipoCampo) throws BussinessException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public ArrayList<UsuarioDTO> selectPrograma() throws BussinessException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public ArrayList<UsuarioDTO> selectPlan(String filtro) throws BussinessException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public ArrayList<UsuarioDTO> consultarTodoDe(Object campo1, Object valorCampo1, int tipoCampo1, Object campo2, Object valorCampo2, int tipoCampo2) throws BussinessException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

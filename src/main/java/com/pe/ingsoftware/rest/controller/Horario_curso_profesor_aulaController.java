@@ -36,8 +36,7 @@ public class Horario_curso_profesor_aulaController {
     @Qualifier("horario_curso_profesor_aula")
     private IBDCrud crud;
 
-    @RequestMapping(value = "/horario_curso_profesor_aula", method = RequestMethod.POST)
-    /*, consumes = "application/json", produces = "application/json") para otra version de spring*/
+    @RequestMapping(value = "/horario_curso_profesor_aula", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
     public void insertar(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, @RequestBody String jsonEntrada) {
         try {
             Horario_curso_profesor_aulaDTO objetoDTO = (Horario_curso_profesor_aulaDTO) jsonTransformer.fromJSON(jsonEntrada, Horario_curso_profesor_aulaDTO.class);

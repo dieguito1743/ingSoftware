@@ -37,8 +37,7 @@ public class DisponibilidadesController {
     @Qualifier("disponibilidades")
     private IBDCrud crud;
 
-    @RequestMapping(value = "/disponibilidades", method = RequestMethod.GET)
-    /*, produces = "application/json") para otra version de spring*/
+    @RequestMapping(value = "/disponibilidades", method = RequestMethod.GET, produces = "application/json")
     public void consultarTodo(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
         try {
             ArrayList<DisponibilidadesDTO> arrayList = crud.consultarTodo();
@@ -71,8 +70,7 @@ public class DisponibilidadesController {
         }
     }
 
-    @RequestMapping(value = "/disponibilidades/{id}", method = RequestMethod.GET)
-    /*, produces = "application/json") para otra version de spring*/
+    @RequestMapping(value = "/disponibilidades/{id}", method = RequestMethod.GET, produces = "application/json")
     public void consultarUno(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, @PathVariable("id") String id) {
         try {
             DisponibilidadesDTO objetoDTO = (DisponibilidadesDTO) crud.consultarUno(id);
