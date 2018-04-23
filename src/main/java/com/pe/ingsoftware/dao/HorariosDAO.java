@@ -13,6 +13,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -35,6 +36,16 @@ public class HorariosDAO implements IBDCrud<HorariosDTO> {
 
     @Override
     public int insertar(HorariosDTO objetoNuevo) throws BussinessException {
+        
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:MM:SS");
+        Time timeStart = null;
+        Time timeEnd = null;
+        try {
+            timeStart = (Time) sdf.parse(objetoNuevo.getTimestarthorario());
+            timeEnd = (Time) sdf.parse(objetoNuevo.getTimeendhorario());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         int retorno = -1;
         PreparedStatement ps;
         ResultSet rs;
@@ -42,8 +53,8 @@ public class HorariosDAO implements IBDCrud<HorariosDTO> {
             ps = cnn.getCnn().prepareStatement(SQL_INSERT, PreparedStatement.RETURN_GENERATED_KEYS);
             ps.setInt(1, objetoNuevo.getCyclehorario());
             ps.setString(2, objetoNuevo.getDayhorario());
-            ps.setString(3, objetoNuevo.getTimestarthorario());
-            ps.setString(4, objetoNuevo.getTimeendhorario());
+            ps.setTime(3, timeStart);
+            ps.setTime(4, timeEnd);
             ps.setInt(5, objetoNuevo.getStatushorario());
             if (ps.executeUpdate() > 0) {
                 rs = ps.getGeneratedKeys();
