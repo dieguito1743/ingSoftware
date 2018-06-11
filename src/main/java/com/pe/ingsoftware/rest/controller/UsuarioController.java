@@ -4,7 +4,7 @@
  */
 package com.pe.ingsoftware.rest.controller;
 
-import com.pe.ingsoftware.dto.UsuarioDTO;
+import com.pe.ingsoftware.dto.UsuariosDTO;
 import com.pe.ingsoftware.interfaces.IBDCrud;
 import com.pe.ingsoftware.interfaces.IJsonTransformer;
 import com.pe.ingsoftware.util.BussinessException;
@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,15 +38,23 @@ public class UsuarioController {
     @Qualifier("usuario")
     private IBDCrud crud;
 
-    @RequestMapping(value = "/usuario/{id}", method = RequestMethod.GET, produces = "application/json")
-    public void consultarUno(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, @PathVariable("id") String id) {
+    @CrossOrigin
+    @RequestMapping(value = "/usuario/user/{user}/pass/{pass}", method = RequestMethod.GET, produces = "application/json")
+    public void consultarUno(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, @PathVariable("user") String user, @PathVariable("pass") String pass) {
         try {
-            UsuarioDTO objetoDTO = (UsuarioDTO) crud.consultarUno(id);
-            String jsonSalida = jsonTransformer.toJson(objetoDTO);
+            UsuariosDTO objetoDTO = (UsuariosDTO) crud.consultarUno("useremail", user, 2);
+            if (user.equalsIgnoreCase(objetoDTO.getUseremail()) && pass.equals(objetoDTO.getUserpass())) {
+                objetoDTO.setUserpass("**********");
+                objetoDTO.setTimeOut(60);
+                String jsonUsuario = jsonTransformer.toJson(objetoDTO);
 
-            httpServletResponse.setStatus(HttpServletResponse.SC_OK);
-            httpServletResponse.setContentType("application/json; charset=UTF-8");
-            httpServletResponse.getWriter().println(jsonSalida);
+                httpServletResponse.setStatus(HttpServletResponse.SC_OK);
+                httpServletResponse.setContentType("application/json; charset=UTF-8");
+                httpServletResponse.getWriter().println(jsonUsuario);
+            } else {
+                httpServletResponse.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                httpServletResponse.setContentType("application/json; charset=UTF-8");
+            }
 
         } catch (BussinessException ex) {
             List<BussinessMessage> bussinessMessage = ex.getBussinessMessages();
@@ -71,10 +80,11 @@ public class UsuarioController {
 
     }
 
+    @CrossOrigin
     @RequestMapping(value = "/usuario", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
     public void insertar(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, @RequestBody String jsonEntrada) {
         try {
-            UsuarioDTO objetoDTO = (UsuarioDTO) jsonTransformer.fromJSON(jsonEntrada, UsuarioDTO.class);
+            UsuariosDTO objetoDTO = (UsuariosDTO) jsonTransformer.fromJSON(jsonEntrada, UsuariosDTO.class);
             if (crud.insertar(objetoDTO) > 0) {
                 String jsonSalida = jsonTransformer.toJson(objetoDTO);
 
@@ -110,10 +120,11 @@ public class UsuarioController {
         }
     }
 
+    @CrossOrigin
     @RequestMapping(value = "/usuario", method = RequestMethod.GET, produces = "application/json")
     public void consultarTodo(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
         try {
-            ArrayList<UsuarioDTO> arrayList = crud.consultarTodo();
+            ArrayList<UsuariosDTO> arrayList = crud.consultarTodo();
             String jsonSalida = jsonTransformer.toJson(arrayList);
 
             httpServletResponse.setStatus(HttpServletResponse.SC_OK);
@@ -144,10 +155,11 @@ public class UsuarioController {
 
     }
 
+    @CrossOrigin
     @RequestMapping(value = "/usuario/{id}", method = RequestMethod.PUT, consumes = "application/json", produces = "application/json")
     public void actualizar(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, @RequestBody String jsonEntrada, @PathVariable("id") String id) {
         try {
-            UsuarioDTO objetoDTO = (UsuarioDTO) jsonTransformer.fromJSON(jsonEntrada, UsuarioDTO.class);
+            UsuariosDTO objetoDTO = (UsuariosDTO) jsonTransformer.fromJSON(jsonEntrada, UsuariosDTO.class);
             if (crud.actualizar(crud.consultarUno(id), objetoDTO)) {
                 String jsonSalida = jsonTransformer.toJson(objetoDTO);
 
@@ -185,6 +197,7 @@ public class UsuarioController {
         }
     }
 
+    @CrossOrigin
     @RequestMapping(value = "/usuario/{id}", method = RequestMethod.DELETE, produces = "application/json")
     public void borrar(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, @PathVariable("id") String id) {
         try {
@@ -212,15 +225,21 @@ public class UsuarioController {
         }
     }
 
-    @RequestMapping(value = "/usuario/testing", method = RequestMethod.GET, produces = "application/json")
-    public void testing(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+    @CrossOrigin
+    @RequestMapping(value = "/usuario/testing/user/{id}/pass/{pass}", method = RequestMethod.GET, produces = "application/json")
+    public void testing(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, @PathVariable("id") String id, @PathVariable("pass") String pass) {
         try {
-            UsuarioDTO objetoDTO = new UsuarioDTO("13200096", "Diego Bermudez", "dieguito.1743@gmail.com", 24);
-            String jsonUsuario = jsonTransformer.toJson(objetoDTO);
+            UsuariosDTO objetoDTO = new UsuariosDTO(1000, "Diego Bermudez Rz", "ADM2018FISI", "ADMINISTRADOR", "dieguito.1743@gmail.com", "DESARROLLO", 0, 15);
+            if (id.equalsIgnoreCase(objetoDTO.getUseremail()) && pass.equals(objetoDTO.getUserpass())) {
+                String jsonUsuario = jsonTransformer.toJson(objetoDTO);
 
-            httpServletResponse.setStatus(HttpServletResponse.SC_OK);
-            httpServletResponse.setContentType("application/json; charset=UTF-8");
-            httpServletResponse.getWriter().println(jsonUsuario);
+                httpServletResponse.setStatus(HttpServletResponse.SC_OK);
+                httpServletResponse.setContentType("application/json; charset=UTF-8");
+                httpServletResponse.getWriter().println(jsonUsuario);
+            } else {
+                httpServletResponse.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                httpServletResponse.setContentType("application/json; charset=UTF-8");
+            }
 
         } catch (Exception ex) {
             httpServletResponse.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);

@@ -25,10 +25,21 @@ import org.springframework.stereotype.Component;
 @Component("aulas")
 public class AulasDAO implements IBDCrud<AulasDTO> {
 
-    private static final String SQL_SELECT_WHERE = "SELECT * FROM AULAS WHERE idaula = ? ";
-    private static final String SQL_SELECT_ALL = "SELECT * FROM AULAS ";
-    private static String SQL_CONSULTAR_UNO = "SELECT * FROM AULAS WHERE ";
-    private static String SQL_CONSULTAR_TODO_DE = "SELECT * FROM AULAS WHERE ";
+    private static final String SQL_SELECT_WHERE = "SELECT "
+            + "idaula,numberaula,flooraula,pavilionaula,typeaula,statusaula "
+            + "FROM AULAS "
+            + "WHERE idaula = ? ";
+    private static final String SQL_SELECT_ALL = "SELECT "
+            + "idaula,numberaula,flooraula,pavilionaula,typeaula,statusaula "
+            + "FROM AULAS ";
+    private static String SQL_CONSULTAR_UNO = "SELECT "
+            + "idaula,numberaula,flooraula,pavilionaula,typeaula,statusaula "
+            + "FROM AULAS "
+            + "WHERE ";
+    private static String SQL_CONSULTAR_TODO_DE = "SELECT "
+            + "idaula,numberaula,flooraula,pavilionaula,typeaula,statusaula "
+            + "FROM AULAS "
+            + "WHERE ";
 
     private static final Conexion cnn = Conexion.crearConexion();
 
@@ -105,7 +116,10 @@ public class AulasDAO implements IBDCrud<AulasDTO> {
 
     @Override
     public AulasDTO consultarUno(Object campo, Object valorCampo, int tipoCampo) throws BussinessException{
-        SQL_CONSULTAR_UNO = "SELECT * FROM CURSOS WHERE " + campo.toString() + " = ?";
+        SQL_CONSULTAR_UNO = "SELECT "
+                + "idaula,numberaula,flooraula,pavilionaula,typeaula,statusaula "
+                + "FROM aulas "
+                + "WHERE " + campo.toString() + " = ?";
         PreparedStatement ps;
         ResultSet rs;
         AulasDTO aula = new AulasDTO();
@@ -152,7 +166,10 @@ public class AulasDAO implements IBDCrud<AulasDTO> {
     @Override
     public ArrayList<AulasDTO> consultarTodoDe(Object campo, Object valorCampo, int tipoCampo) throws BussinessException{
         ArrayList<AulasDTO> ArrayList = new ArrayList();
-        SQL_CONSULTAR_TODO_DE = "SELECT * FROM CURSOS WHERE " + campo.toString() + " = ?";
+        SQL_CONSULTAR_TODO_DE = "SELECT "
+                + "idaula,numberaula,flooraula,pavilionaula,typeaula,statusaula "
+                + "FROM aulas "
+                + "WHERE " + campo.toString() + " = ?";
         PreparedStatement ps;
         ResultSet rs;
         AulasDTO aula;

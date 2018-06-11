@@ -28,43 +28,43 @@ public class ProfesoresDTO {
         this.statusprofesor = statusprofesor;
     }
 
-    public int getIdProfesor() {
+    public int getIdprofesor() {
         return idprofesor;
     }
 
-    public void setIdProfesor(int idprofesor) {
+    public void setIdprofesor(int idprofesor) {
         this.idprofesor = idprofesor;
     }
 
-    public String getNameProfesor() {
+    public String getnameprofesor() {
         return nameprofesor;
     }
 
-    public void setNameProfesor(String nameprofesor) {
+    public void setnameprofesor(String nameprofesor) {
         this.nameprofesor = nameprofesor;
     }
 
-    public String getLastNameProfesor() {
+    public String getlastnameprofesor() {
         return lastnameprofesor;
     }
 
-    public void setLastNameProfesor(String lastnameprofesor) {
+    public void setlastnameprofesor(String lastnameprofesor) {
         this.lastnameprofesor = lastnameprofesor;
     }
 
-    public String getCodProfesor() {
+    public String getcodprofesor() {
         return codprofesor;
     }
 
-    public void setCodProfesor(String codprofesor) {
+    public void setcodprofesor(String codprofesor) {
         this.codprofesor = codprofesor;
     }
 
-    public int getStatusPorfesor() {
+    public int getstatusprofesor() {
         return statusprofesor;
     }
 
-    public void setStatusPorfesor(int statusprofesor) {
+    public void setstatusprofesor(int statusprofesor) {
         this.statusprofesor = statusprofesor;
     }
 

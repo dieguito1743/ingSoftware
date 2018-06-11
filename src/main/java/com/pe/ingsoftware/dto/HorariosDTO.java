@@ -11,7 +11,7 @@ package com.pe.ingsoftware.dto;
  */
 public class HorariosDTO {
 
-    private int idhorarios;
+    private int idhorario;
     private int cyclehorario;
     private String dayhorario;
     private String timestarthorario;
@@ -21,8 +21,8 @@ public class HorariosDTO {
     public HorariosDTO() {
     }
 
-    public HorariosDTO(int idhorarios, int cyclehorario, String dayhorario, String timestarthorario, String timeendhorario, int statushorario) {
-        this.idhorarios = idhorarios;
+    public HorariosDTO(int idhorario, int cyclehorario, String dayhorario, String timestarthorario, String timeendhorario, int statushorario) {
+        this.idhorario = idhorario;
         this.cyclehorario = cyclehorario;
         this.dayhorario = dayhorario;
         this.timestarthorario = timestarthorario;
@@ -30,12 +30,12 @@ public class HorariosDTO {
         this.statushorario = statushorario;
     }
 
-    public int getIdhorarios() {
-        return idhorarios;
+    public int getIdhorario() {
+        return idhorario;
     }
 
-    public void setIdhorarios(int idhorarios) {
-        this.idhorarios = idhorarios;
+    public void setIdhorario(int idhorarios) {
+        this.idhorario = idhorarios;
     }
 
     public int getCyclehorario() {

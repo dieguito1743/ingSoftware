@@ -19,7 +19,13 @@ import com.pe.ingsoftware.interfaces.IJsonTransformer;
 import com.pe.ingsoftware.util.BussinessException;
 import com.pe.ingsoftware.util.BussinessMessage;
 import com.pe.ingsoftware.util.JsonTransformer;
+
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.sql.Time;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -36,13 +42,32 @@ public class MainTest {
     //@Qualifier("profesores")
     //private static IBDCrud profesores;
     public static void main(String[] args) {
+    	SimpleDateFormat sdf = new SimpleDateFormat("HH:MM:SS");
+    	Calendar calendar = GregorianCalendar.getInstance();
+    	Date today = null;
+        Time timeStart = null;
+        Time timeEnd = null;
+        try {
+        	today = sdf.parse("09:00");
+        	calendar.setTime(today);
+            timeStart = new Time(calendar.getTimeInMillis());
+            System.out.println(calendar.getTime());
+            System.out.println(timeStart);
+            today = sdf.parse("13:00");
+        	calendar.setTime(today);
+            timeEnd = new Time(calendar.getTimeInMillis());
+            System.out.println(calendar.getTime());
+            System.out.println(timeEnd);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         //profesoresTest();
         //cursosTetst();
         //disponibilidadesTest();
         //horas_cursosTest();
         //preferencias_cursos_profesoresTest();
-        listar_programa_cursos();
-        listar_plan_cursos();
+        //listar_programa_cursos();
+        //listar_plan_cursos();
     }
 
     public static void listar_programa_cursos() {
@@ -93,11 +118,11 @@ public class MainTest {
             ArrayList<ProfesoresDTO> arrayList = crud.consultarTodo();
             jsonSalida = jsonTransformer.toJson(arrayList);
             for (ProfesoresDTO objeto : arrayList) {
-                System.out.println("ID      : " + objeto.getIdProfesor());
-                System.out.println("CODIGO  : " + objeto.getCodProfesor());
-                System.out.println("NOMBRE  : " + objeto.getNameProfesor());
-                System.out.println("APELLIDO: " + objeto.getLastNameProfesor());
-                System.out.println("ESTADO  : " + objeto.getStatusPorfesor());
+                System.out.println("ID      : " + objeto.getIdprofesor());
+                System.out.println("CODIGO  : " + objeto.getcodprofesor());
+                System.out.println("NOMBRE  : " + objeto.getnameprofesor());
+                System.out.println("APELLIDO: " + objeto.getlastnameprofesor());
+                System.out.println("ESTADO  : " + objeto.getstatusprofesor());
                 System.err.println("");
             }
 
@@ -144,7 +169,7 @@ public class MainTest {
             ArrayList<DisponibilidadesDTO> arrayList = crud.consultarTodo();
             jsonSalida = jsonTransformer.toJson(arrayList);
             for (DisponibilidadesDTO objeto : arrayList) {
-                System.out.println("PROFESOR: " + profesoresTest(objeto.getIdprofesor()).getNameProfesor() + " " + profesoresTest(objeto.getIdprofesor()).getLastNameProfesor());
+                System.out.println("PROFESOR: " + profesoresTest(objeto.getIdprofesor()).getnameprofesor() + " " + profesoresTest(objeto.getIdprofesor()).getlastnameprofesor());
                 System.out.println("DIA     : " + objeto.getDaydisponibilidad());
                 System.out.println("INICIO  : " + objeto.getHourstartdisponibilidad());
                 System.out.println("FIN     : " + objeto.getHourstartdisponibilidad());
@@ -221,7 +246,7 @@ public class MainTest {
             jsonSalida = jsonTransformer.toJson(arrayList);
             for (Preferencias_cursos_profesoresDTO objeto : arrayList) {
                 System.out.println("CURSO   : " + cursosTest(objeto.getIdcurso()).getNamecurso());
-                System.out.println("PROFESOR: " + profesoresTest(objeto.getIdprofesor()).getNameProfesor() + " " + profesoresTest(objeto.getIdprofesor()).getLastNameProfesor());
+                System.out.println("PROFESOR: " + profesoresTest(objeto.getIdprofesor()).getnameprofesor() + " " + profesoresTest(objeto.getIdprofesor()).getlastnameprofesor());
                 System.err.println("");
             }
 

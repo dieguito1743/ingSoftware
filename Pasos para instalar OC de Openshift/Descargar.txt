@@ -1,4 +1,0 @@
-URL:
-https://www.openshift.org/download.html
-DESCARGAR:
-LA VERSION PARA WINDOWS

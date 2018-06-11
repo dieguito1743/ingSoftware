@@ -25,10 +25,21 @@ import org.springframework.stereotype.Component;
 @Component("horas_cursos")
 public class Horas_cursosDAO implements IBDCrud<Horas_cursosDTO> {
 
-    private static final String SQL_SELECT_WHERE = "SELECT * FROM HORAS_CURSOS WHERE idhora_curso = ? ";
-    private static final String SQL_SELECT_ALL = "SELECT * FROM HORAS_CURSOS ";
-    private static String SQL_CONSULTAR_UNO = "SELECT * FROM HORAS_CURSOS WHERE ";
-    private static String SQL_CONSULTAR_TODO_DE = "SELECT * FROM HORAS_CURSOS WHERE ";
+    private static final String SQL_SELECT_WHERE = "SELECT "
+            + "idhora_curso,typehora_curso,numberhourhora_curso,idcurso "
+            + "FROM HORAS_CURSOS "
+            + "WHERE idhora_curso = ? ";
+    private static final String SQL_SELECT_ALL = "SELECT "
+            + "idhora_curso,typehora_curso,numberhourhora_curso,idcurso "
+            + "FROM HORAS_CURSOS ";
+    private static String SQL_CONSULTAR_UNO = "SELECT "
+            + "idhora_curso,typehora_curso,numberhourhora_curso,idcurso "
+            + "FROM HORAS_CURSOS "
+            + "WHERE ";
+    private static String SQL_CONSULTAR_TODO_DE = "SELECT "
+            + "idhora_curso,typehora_curso,numberhourhora_curso,idcurso "
+            + "FROM HORAS_CURSOS "
+            + "WHERE ";
 
     private static final Conexion cnn = Conexion.crearConexion();
 
@@ -103,7 +114,10 @@ public class Horas_cursosDAO implements IBDCrud<Horas_cursosDTO> {
 
     @Override
     public Horas_cursosDTO consultarUno(Object campo, Object valorCampo, int tipoCampo) throws BussinessException{
-        SQL_CONSULTAR_UNO = "SELECT * FROM CURSOS WHERE " + campo.toString() + " = ?";
+        SQL_CONSULTAR_UNO = "SELECT "
+                + "idhora_curso,typehora_curso,numberhourhora_curso,idcurso "
+                + "FROM HORAS_CURSOS "
+                + "WHERE " + campo.toString() + " = ?";
         PreparedStatement ps;
         ResultSet rs;
         Horas_cursosDTO horas_curso = new Horas_cursosDTO();
@@ -148,7 +162,10 @@ public class Horas_cursosDAO implements IBDCrud<Horas_cursosDTO> {
     @Override
     public ArrayList<Horas_cursosDTO> consultarTodoDe(Object campo, Object valorCampo, int tipoCampo) throws BussinessException{
         ArrayList<Horas_cursosDTO> ArrayList = new ArrayList();
-        SQL_CONSULTAR_TODO_DE = "SELECT * FROM CURSOS WHERE " + campo.toString() + " = ?";
+        SQL_CONSULTAR_TODO_DE = "SELECT "
+                + "idhora_curso,typehora_curso,numberhourhora_curso,idcurso "
+                + "FROM HORAS_CURSOS "
+                + "WHERE " + campo.toString() + " = ?";
         PreparedStatement ps;
         ResultSet rs;
         Horas_cursosDTO horas_curso;

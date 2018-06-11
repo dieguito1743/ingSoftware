@@ -13,13 +13,23 @@ public class Preferencias_cursos_profesoresDTO {
 
     private int idcurso;
     private int idprofesor;
+    private String cyclepreferencia;
 
     public Preferencias_cursos_profesoresDTO() {
     }
 
-    public Preferencias_cursos_profesoresDTO(int idcurso, int idprofesor) {
+    public Preferencias_cursos_profesoresDTO(int idcurso, int idprofesor, String cyclepreferencia) {
         this.idcurso = idcurso;
         this.idprofesor = idprofesor;
+        this.cyclepreferencia = cyclepreferencia;
+    }
+
+    public String getCyclepreferencia() {
+        return cyclepreferencia;
+    }
+
+    public void setCyclepreferencia(String cyclepreferencia) {
+        this.cyclepreferencia = cyclepreferencia;
     }
 
     public int getIdcurso() {

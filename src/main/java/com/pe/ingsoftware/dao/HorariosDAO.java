@@ -15,6 +15,9 @@ import java.sql.SQLException;
 import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.stereotype.Component;
@@ -26,23 +29,41 @@ import org.springframework.stereotype.Component;
 @Component("horarios")
 public class HorariosDAO implements IBDCrud<HorariosDTO> {
 
-    private static final String SQL_INSERT = "INSERT INTO HORARIOS (cyclehorario, dayhorario, timestarthorario, timeendhorario, statushorario) VALUES (?,?,?) ";
-    private static final String SQL_SELECT_WHERE = "SELECT * FROM HORARIOS WHERE idhorario = ? ";
-    private static final String SQL_SELECT_ALL = "SELECT * FROM HORARIOS ";
-    private static String SQL_CONSULTAR_UNO = "SELECT * FROM HORARIOS WHERE ";
-    private static String SQL_CONSULTAR_TODO_DE = "SELECT * FROM HORARIOS WHERE ";
+    private static final String SQL_INSERT = "INSERT "
+            + "INTO HORARIOS (cyclehorario, dayhorario, timestarthorario, timeendhorario, statushorario) "
+            + "VALUES (?,?,?,?,?) ";
+    private static final String SQL_SELECT_WHERE = "SELECT "
+            + "idhorario, cyclehorario, dayhorario, timestarthorario, timeendhorario, statushorario "
+            + "FROM HORARIOS "
+            + "WHERE idhorario = ? ";
+    private static final String SQL_SELECT_ALL = "SELECT "
+            + "idhorario, cyclehorario, dayhorario, timestarthorario, timeendhorario, statushorario "
+            + "FROM HORARIOS ";
+    private static String SQL_CONSULTAR_UNO = "SELECT "
+            + "idhorario, cyclehorario, dayhorario, timestarthorario, timeendhorario, statushorario "
+            + "FROM HORARIOS "
+            + "WHERE ";
+    private static String SQL_CONSULTAR_TODO_DE = "SELECT "
+            + "idhorario, cyclehorario, dayhorario, timestarthorario, timeendhorario, statushorario "
+            + "FROM HORARIOS "
+            + "WHERE ";
 
     private static final Conexion cnn = Conexion.crearConexion();
 
     @Override
     public int insertar(HorariosDTO objetoNuevo) throws BussinessException {
-        
         SimpleDateFormat sdf = new SimpleDateFormat("HH:MM:SS");
+        Calendar calendar = GregorianCalendar.getInstance();
+        Date today = null;
         Time timeStart = null;
         Time timeEnd = null;
         try {
-            timeStart = (Time) sdf.parse(objetoNuevo.getTimestarthorario());
-            timeEnd = (Time) sdf.parse(objetoNuevo.getTimeendhorario());
+            today = sdf.parse(objetoNuevo.getTimestarthorario());
+            calendar.setTime(today);
+            timeStart = new Time(calendar.getTimeInMillis());
+            today = sdf.parse(objetoNuevo.getTimeendhorario());
+            calendar.setTime(today);
+            timeEnd = new Time(calendar.getTimeInMillis());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -120,7 +141,7 @@ public class HorariosDAO implements IBDCrud<HorariosDTO> {
             ps.setInt(1, Integer.parseInt(primaryKey.toString()));
             rs = ps.executeQuery();
             if (rs.next()) {
-                horario.setIdhorarios(rs.getInt(1));
+                horario.setIdhorario(rs.getInt(1));
                 horario.setCyclehorario(rs.getInt(2));
                 horario.setDayhorario(rs.getString(3));
                 horario.setTimestarthorario(rs.getString(4));
@@ -139,8 +160,11 @@ public class HorariosDAO implements IBDCrud<HorariosDTO> {
     }
 
     @Override
-    public HorariosDTO consultarUno(Object campo, Object valorCampo, int tipoCampo) throws BussinessException{
-        SQL_CONSULTAR_UNO = "SELECT * FROM CURSOS WHERE " + campo.toString() + " = ?";
+    public HorariosDTO consultarUno(Object campo, Object valorCampo, int tipoCampo) throws BussinessException {
+        SQL_CONSULTAR_UNO = "SELECT "
+                + "idhorario, cyclehorario, dayhorario, timestarthorario, timeendhorario, statushorario "
+                + "FROM HORARIOS "
+                + "WHERE " + campo.toString() + " = ?";
         PreparedStatement ps;
         ResultSet rs;
         HorariosDTO horario = new HorariosDTO();
@@ -166,7 +190,7 @@ public class HorariosDAO implements IBDCrud<HorariosDTO> {
             }
             rs = ps.executeQuery();
             if (rs.next()) {
-                horario.setIdhorarios(rs.getInt(1));
+                horario.setIdhorario(rs.getInt(1));
                 horario.setCyclehorario(rs.getInt(2));
                 horario.setDayhorario(rs.getString(3));
                 horario.setTimestarthorario(rs.getString(4));
@@ -185,9 +209,12 @@ public class HorariosDAO implements IBDCrud<HorariosDTO> {
     }
 
     @Override
-    public ArrayList<HorariosDTO> consultarTodoDe(Object campo, Object valorCampo, int tipoCampo) throws BussinessException{
+    public ArrayList<HorariosDTO> consultarTodoDe(Object campo, Object valorCampo, int tipoCampo) throws BussinessException {
         ArrayList<HorariosDTO> ArrayList = new ArrayList();
-        SQL_CONSULTAR_TODO_DE = "SELECT * FROM CURSOS WHERE " + campo.toString() + " = ?";
+        SQL_CONSULTAR_TODO_DE = "SELECT "
+                + "idhorario, cyclehorario, dayhorario, timestarthorario, timeendhorario, statushorario "
+                + "FROM HORARIOS "
+                + "WHERE " + campo.toString() + " = ?";
         PreparedStatement ps;
         ResultSet rs;
         HorariosDTO horario;
@@ -232,12 +259,12 @@ public class HorariosDAO implements IBDCrud<HorariosDTO> {
     }
 
     @Override
-    public ArrayList<HorariosDTO> selectPrograma() throws BussinessException{
+    public ArrayList<HorariosDTO> selectPrograma() throws BussinessException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public ArrayList<HorariosDTO> selectPlan(String filtro) throws BussinessException{
+    public ArrayList<HorariosDTO> selectPlan(String filtro) throws BussinessException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

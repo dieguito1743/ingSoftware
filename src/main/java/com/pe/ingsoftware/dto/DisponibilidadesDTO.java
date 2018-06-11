@@ -12,6 +12,7 @@ package com.pe.ingsoftware.dto;
 public class DisponibilidadesDTO {
 
     private int iddisponibilidad;
+    private String cycledisponibilidad;
     private String daydisponibilidad;
     private String hourstartdisponibilidad;
     private String hourenddisponibilidad;
@@ -21,13 +22,22 @@ public class DisponibilidadesDTO {
     public DisponibilidadesDTO() {
     }
 
-    public DisponibilidadesDTO(int iddisponibilidad, String daydisponibilidad, String hourstartdisponibilidad, String hourenddisponibilidad, int statusdisponibilidad, int idprofesor) {
+    public DisponibilidadesDTO(int iddisponibilidad, String cycledisponibilidad, String daydisponibilidad, String hourstartdisponibilidad, String hourenddisponibilidad, int statusdisponibilidad, int idprofesor) {
         this.iddisponibilidad = iddisponibilidad;
+        this.cycledisponibilidad = cycledisponibilidad;
         this.daydisponibilidad = daydisponibilidad;
         this.hourstartdisponibilidad = hourstartdisponibilidad;
         this.hourenddisponibilidad = hourenddisponibilidad;
         this.statusdisponibilidad = statusdisponibilidad;
         this.idprofesor = idprofesor;
+    }
+
+    public String getCycledisponibilidad() {
+        return cycledisponibilidad;
+    }
+
+    public void setCycledisponibilidad(String cycledisponibilidad) {
+        this.cycledisponibilidad = cycledisponibilidad;
     }
 
     public int getIddisponibilidad() {

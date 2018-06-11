@@ -25,12 +25,28 @@ import org.springframework.stereotype.Component;
 @Component("cursos")
 public class CursosDAO implements IBDCrud<CursosDTO> {
 
-    private static final String SQL_SELECT_WHERE = "SELECT * FROM CURSOS WHERE idcurso = ? ";
-    private static final String SQL_SELECT_ALL = "SELECT * FROM CURSOS ";
-    private static String SQL_CONSULTAR_UNO = "SELECT * FROM CURSOS WHERE ";
-    private static String SQL_CONSULTAR_TODO_DE = "SELECT * FROM CURSOS WHERE ";
-    private static final String SQL_SELECT_PROGRAM = "SELECT distinct programcurso FROM cursos ";
-    private static final String SQL_SELET_PLAN = "SELECT distinct plancurso FROM cursos where programcurso = ? ";
+    private static final String SQL_SELECT_WHERE = "SELECT "
+            + "idcurso,namecurso,codcurso,cyclecurso,plancurso,programcurso,statuscurso "
+            + "FROM CURSOS "
+            + "WHERE idcurso = ? ";
+    private static final String SQL_SELECT_ALL = "SELECT "
+            + "idcurso,namecurso,codcurso,cyclecurso,plancurso,programcurso,statuscurso "
+            + "FROM CURSOS ";
+    private static String SQL_CONSULTAR_UNO = "SELECT "
+            + "idcurso,namecurso,codcurso,cyclecurso,plancurso,programcurso,statuscurso "
+            + "FROM CURSOS "
+            + "WHERE ";
+    private static String SQL_CONSULTAR_TODO_DE = "SELECT "
+            + "idcurso,namecurso,codcurso,cyclecurso,plancurso,programcurso,statuscurso "
+            + "FROM CURSOS "
+            + "WHERE ";
+    private static final String SQL_SELECT_PROGRAM = "SELECT "
+            + "distinct programcurso "
+            + "FROM cursos ";
+    private static final String SQL_SELET_PLAN = "SELECT "
+            + "distinct plancurso "
+            + "FROM cursos "
+            + "WHERE programcurso = ? ";
 
     private static final Conexion cnn = Conexion.crearConexion();
 
@@ -140,21 +156,21 @@ public class CursosDAO implements IBDCrud<CursosDTO> {
     public CursosDTO consultarUno(Object primaryKey) throws BussinessException {
         PreparedStatement ps;
         ResultSet rs;
-        CursosDTO curso = new CursosDTO();
+        CursosDTO objetoDTO = new CursosDTO();
         try {
             ps = cnn.getCnn().prepareStatement(SQL_SELECT_WHERE);
             ps.setInt(1, Integer.parseInt(primaryKey.toString()));
             rs = ps.executeQuery();
             if (rs.next()) {
-                curso.setIdcurso(rs.getInt(1));
-                curso.setNamecurso(rs.getString(2));
-                curso.setCodcurso(rs.getString(3));
-                curso.setCyclecurso(rs.getString(4));
-                curso.setPlancurso(rs.getString(5));
-                curso.setProgramcurso(rs.getString(6));
-                curso.setStatuscurso(rs.getInt(7));
+                objetoDTO.setIdcurso(rs.getInt(1));
+                objetoDTO.setNamecurso(rs.getString(2));
+                objetoDTO.setCodcurso(rs.getString(3));
+                objetoDTO.setCyclecurso(rs.getString(4));
+                objetoDTO.setPlancurso(rs.getString(5));
+                objetoDTO.setProgramcurso(rs.getString(6));
+                objetoDTO.setStatuscurso(rs.getInt(7));
             }
-            return curso;
+            return objetoDTO;
         } catch (SQLException ex) {
             Logger.getLogger(CursosDTO.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
@@ -162,15 +178,18 @@ public class CursosDAO implements IBDCrud<CursosDTO> {
         } finally {
             cnn.cerrarConexion();
         }
-        return curso;
+        return objetoDTO;
     }
 
     @Override
     public CursosDTO consultarUno(Object campo, Object valorCampo, int tipoCampo) throws BussinessException {
-        SQL_CONSULTAR_UNO = "SELECT * FROM CURSOS WHERE " + campo.toString() + " = ?";
+        SQL_CONSULTAR_UNO = "SELECT "
+                + "idcurso,namecurso,codcurso,cyclecurso,plancurso,programcurso,statuscurso "
+                + "FROM CURSOS "
+                + "WHERE " + campo.toString() + " = ?";
         PreparedStatement ps;
         ResultSet rs;
-        CursosDTO curso = new CursosDTO();
+        CursosDTO objetoDTO = new CursosDTO();
         try {
             ps = cnn.getCnn().prepareStatement(SQL_CONSULTAR_UNO);
             switch (tipoCampo) {
@@ -193,15 +212,15 @@ public class CursosDAO implements IBDCrud<CursosDTO> {
             }
             rs = ps.executeQuery();
             if (rs.next()) {
-                curso.setIdcurso(rs.getInt(1));
-                curso.setNamecurso(rs.getString(2));
-                curso.setCodcurso(rs.getString(3));
-                curso.setCyclecurso(rs.getString(4));
-                curso.setPlancurso(rs.getString(5));
-                curso.setProgramcurso(rs.getString(6));
-                curso.setStatuscurso(rs.getInt(7));
+                objetoDTO.setIdcurso(rs.getInt(1));
+                objetoDTO.setNamecurso(rs.getString(2));
+                objetoDTO.setCodcurso(rs.getString(3));
+                objetoDTO.setCyclecurso(rs.getString(4));
+                objetoDTO.setPlancurso(rs.getString(5));
+                objetoDTO.setProgramcurso(rs.getString(6));
+                objetoDTO.setStatuscurso(rs.getInt(7));
             }
-            return curso;
+            return objetoDTO;
         } catch (SQLException ex) {
             Logger.getLogger(CursosDTO.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
@@ -209,16 +228,19 @@ public class CursosDAO implements IBDCrud<CursosDTO> {
         } finally {
             cnn.cerrarConexion();
         }
-        return curso;
+        return objetoDTO;
     }
 
     @Override
     public ArrayList<CursosDTO> consultarTodoDe(Object campo, Object valorCampo, int tipoCampo) throws BussinessException {
         ArrayList<CursosDTO> ArrayList = new ArrayList();
-        SQL_CONSULTAR_TODO_DE = "SELECT * FROM CURSOS WHERE " + campo.toString() + " = ?";
+        SQL_CONSULTAR_TODO_DE = "SELECT "
+                + "idcurso,namecurso,codcurso,cyclecurso,plancurso,programcurso,statuscurso "
+                + "FROM CURSOS "
+                + "WHERE " + campo.toString() + " = ?";
         PreparedStatement ps;
         ResultSet rs;
-        CursosDTO curso;
+        CursosDTO ObjetoDTO;
         try {
             ps = cnn.getCnn().prepareStatement(SQL_CONSULTAR_TODO_DE);
             switch (tipoCampo) {
@@ -244,8 +266,8 @@ public class CursosDAO implements IBDCrud<CursosDTO> {
                 ArrayList = null;
             } else {
                 do {
-                    curso = new CursosDTO(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getInt(7));
-                    ArrayList.add(curso);
+                    ObjetoDTO = new CursosDTO(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getInt(7));
+                    ArrayList.add(ObjetoDTO);
                 } while (rs.next());
             }
             return ArrayList;
@@ -265,7 +287,7 @@ public class CursosDAO implements IBDCrud<CursosDTO> {
         SQL_CONSULTAR_TODO_DE = "SELECT * FROM CURSOS WHERE " + campo1.toString() + " = ? and " + campo2.toString() + " = ?";
         PreparedStatement ps;
         ResultSet rs;
-        CursosDTO curso;
+        CursosDTO ObjetoDTO;
         try {
             ps = cnn.getCnn().prepareStatement(SQL_CONSULTAR_TODO_DE);
             switch (tipoCampo1) {
@@ -309,8 +331,8 @@ public class CursosDAO implements IBDCrud<CursosDTO> {
                 ArrayList = null;
             } else {
                 do {
-                    curso = new CursosDTO(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getInt(7));
-                    ArrayList.add(curso);
+                    ObjetoDTO = new CursosDTO(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getInt(7));
+                    ArrayList.add(ObjetoDTO);
                 } while (rs.next());
             }
             return ArrayList;

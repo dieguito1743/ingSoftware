@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -37,15 +38,21 @@ public class Preferencias_cursos_profesoresController {
     @Qualifier("preferencias_cursos_profesores")
     private IBDCrud crud;
 
-    @RequestMapping(value = "/preferencias_cursos_profesores/{id}", method = RequestMethod.GET, produces = "application/json")
+    @CrossOrigin
+    @RequestMapping(value = "/preferencias_cursos_profesores/curso/{id}", method = RequestMethod.GET, produces = "application/json")
     public void consultarUno(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, @PathVariable("id") String id) {
         try {
-            Preferencias_cursos_profesoresDTO objetoDTO = (Preferencias_cursos_profesoresDTO) crud.consultarUno(id);
-            String jsonSalida = jsonTransformer.toJson(objetoDTO);
+            ArrayList<Preferencias_cursos_profesoresDTO> objetoDTO = crud.consultarTodoDe("idcurso", id, 0);
+            if (!objetoDTO.isEmpty()) {
+                String jsonSalida = jsonTransformer.toJson(objetoDTO);
 
-            httpServletResponse.setStatus(HttpServletResponse.SC_OK);
-            httpServletResponse.setContentType("application/json; charset=UTF-8");
-            httpServletResponse.getWriter().println(jsonSalida);
+                httpServletResponse.setStatus(HttpServletResponse.SC_OK);
+                httpServletResponse.setContentType("application/json; charset=UTF-8");
+                httpServletResponse.getWriter().println(jsonSalida);
+            }else{
+                httpServletResponse.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                httpServletResponse.setContentType("application/json; charset=UTF-8");
+            }
 
         } catch (BussinessException ex) {
             List<BussinessMessage> bussinessMessage = ex.getBussinessMessages();
@@ -69,6 +76,7 @@ public class Preferencias_cursos_profesoresController {
         }
     }
 
+    @CrossOrigin
     @RequestMapping(value = "/preferencias_cursos_profesores", method = RequestMethod.GET, produces = "application/json")
     public void consultarTodo(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
         try {

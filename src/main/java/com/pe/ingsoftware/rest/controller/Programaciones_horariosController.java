@@ -5,7 +5,7 @@
  */
 package com.pe.ingsoftware.rest.controller;
 
-import com.pe.ingsoftware.dto.Horario_curso_profesor_aulaDTO;
+import com.pe.ingsoftware.dto.Programaciones_horariosDTO;
 import com.pe.ingsoftware.interfaces.IBDCrud;
 import com.pe.ingsoftware.interfaces.IJsonTransformer;
 import com.pe.ingsoftware.util.BussinessException;
@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -26,20 +27,21 @@ import org.springframework.web.bind.annotation.RestController;
  * @author DiegoDavid
  */
 @RestController
-public class Horario_curso_profesor_aulaController {
+public class Programaciones_horariosController {
 
     @Autowired
     @Qualifier("jsonTransformer")
     private IJsonTransformer jsonTransformer;
     //
     @Autowired
-    @Qualifier("horario_curso_profesor_aula")
+    @Qualifier("programaciones_horarios")
     private IBDCrud crud;
-
-    @RequestMapping(value = "/horario_curso_profesor_aula", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
+    
+    @CrossOrigin
+    @RequestMapping(value = "/programaciones_horarios", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
     public void insertar(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, @RequestBody String jsonEntrada) {
         try {
-            Horario_curso_profesor_aulaDTO objetoDTO = (Horario_curso_profesor_aulaDTO) jsonTransformer.fromJSON(jsonEntrada, Horario_curso_profesor_aulaDTO.class);
+            Programaciones_horariosDTO objetoDTO = (Programaciones_horariosDTO) jsonTransformer.fromJSON(jsonEntrada, Programaciones_horariosDTO.class);
             if (crud.insertar(objetoDTO) > 0) {
                 String jsonSalida = jsonTransformer.toJson(objetoDTO);
 
@@ -47,10 +49,8 @@ public class Horario_curso_profesor_aulaController {
                 httpServletResponse.setContentType("application/json; charset=UTF-8");
                 httpServletResponse.getWriter().println(jsonSalida);
             } else {
-                String jsonSalida = "{result: null}";
-                httpServletResponse.setStatus(HttpServletResponse.SC_OK);
+                httpServletResponse.setStatus(HttpServletResponse.SC_BAD_REQUEST);
                 httpServletResponse.setContentType("application/json; charset=UTF-8");
-                httpServletResponse.getWriter().println(jsonSalida);
             }
         } catch (BussinessException ex) {
             List<BussinessMessage> bussinessMessage = ex.getBussinessMessages();
@@ -61,7 +61,7 @@ public class Horario_curso_profesor_aulaController {
             try {
                 httpServletResponse.getWriter().println(jsonSalida);
             } catch (IOException ex1) {
-                //Logger.getLogger(Horario_curso_profesor_aulaController.class.getName()).log(Level.SEVERE, null, ex1);
+                //Logger.getLogger(ProgramacionesController.class.getName()).log(Level.SEVERE, null, ex1);
             }
 
         } catch (Exception ex) {
@@ -70,7 +70,7 @@ public class Horario_curso_profesor_aulaController {
             try {
                 ex.printStackTrace(httpServletResponse.getWriter());
             } catch (IOException ex1) {
-                //Logger.getLogger(Horario_curso_profesor_aulaController.class.getName()).log(Level.SEVERE, null, ex1);
+                //Logger.getLogger(ProgramacionesController.class.getName()).log(Level.SEVERE, null, ex1);
             }
         }
     }

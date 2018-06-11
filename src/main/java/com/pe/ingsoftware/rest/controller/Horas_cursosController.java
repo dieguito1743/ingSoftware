@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -37,6 +38,7 @@ public class Horas_cursosController {
     @Qualifier("horas_cursos")
     private IBDCrud crud;
 
+    @CrossOrigin
     @RequestMapping(value = "/horas_cursos/{id}", method = RequestMethod.GET, produces = "application/json")
     public void consultarUno(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, @PathVariable("id") String id) {
         try {
@@ -69,6 +71,7 @@ public class Horas_cursosController {
         }
     }
 
+    @CrossOrigin
     @RequestMapping(value = "/horas_cursos", method = RequestMethod.GET, produces = "application/json")
     public void consultarTodo(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
         try {

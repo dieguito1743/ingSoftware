@@ -25,10 +25,21 @@ import org.springframework.stereotype.Component;
 @Component("profesores")
 public class ProfesoresDAO implements IBDCrud<ProfesoresDTO> {
 
-    private static final String SQL_SELECT_WHERE = "SELECT * FROM PROFESORES WHERE idprofesor = ? ";
-    private static final String SQL_SELECT_ALL = "SELECT * FROM PROFESORES ";
-    private static String SQL_CONSULTAR_UNO = "SELECT * FROM PROFESORES WHERE ";
-    private static String SQL_CONSULTAR_TODO_DE = "SELECT * FROM PROFESORES WHERE ";
+    private static final String SQL_SELECT_WHERE = "SELECT "
+            + "idprofesor,nameprofesor,lastnameprofesor,codprofesor,statusprofesor "
+            + "FROM PROFESORES "
+            + "WHERE idprofesor = ? ";
+    private static final String SQL_SELECT_ALL = "SELECT "
+            + "idprofesor,nameprofesor,lastnameprofesor,codprofesor,statusprofesor "
+            + "FROM PROFESORES ";
+    private static String SQL_CONSULTAR_UNO = "SELECT "
+            + "idprofesor,nameprofesor,lastnameprofesor,codprofesor,statusprofesor "
+            + "FROM PROFESORES "
+            + "WHERE ";
+    private static String SQL_CONSULTAR_TODO_DE = "SELECT "
+            + "idprofesor,nameprofesor,lastnameprofesor,codprofesor,statusprofesor "
+            + "FROM PROFESORES "
+            + "WHERE ";
 
     private static final Conexion cnn = Conexion.crearConexion();
 
@@ -85,11 +96,11 @@ public class ProfesoresDAO implements IBDCrud<ProfesoresDTO> {
             ps.setInt(1, Integer.parseInt(primaryKey.toString()));
             rs = ps.executeQuery();
             if (rs.next()) {
-                profesor.setIdProfesor(rs.getInt(1));
-                profesor.setNameProfesor(rs.getString(2));
-                profesor.setLastNameProfesor(rs.getString(3));
-                profesor.setCodProfesor(rs.getString(4));
-                profesor.setStatusPorfesor(rs.getInt(5));
+                profesor.setIdprofesor(rs.getInt(1));
+                profesor.setnameprofesor(rs.getString(2));
+                profesor.setlastnameprofesor(rs.getString(3));
+                profesor.setcodprofesor(rs.getString(4));
+                profesor.setstatusprofesor(rs.getInt(5));
             }
             return profesor;
         } catch (SQLException ex) {
@@ -104,7 +115,10 @@ public class ProfesoresDAO implements IBDCrud<ProfesoresDTO> {
 
     @Override
     public ProfesoresDTO consultarUno(Object campo, Object valorCampo, int tipoCampo) throws BussinessException{
-        SQL_CONSULTAR_UNO = SQL_CONSULTAR_UNO + campo.toString() + " = ?";
+        SQL_CONSULTAR_UNO = "SELECT "
+            + "idprofesor,nameprofesor,lastnameprofesor,codprofesor,statusprofesor "
+            + "FROM PROFESORES "
+            + "WHERE " + campo.toString() + " = ?";
         PreparedStatement ps;
         ResultSet rs;
         ProfesoresDTO profesor = new ProfesoresDTO();
@@ -130,11 +144,11 @@ public class ProfesoresDAO implements IBDCrud<ProfesoresDTO> {
             }
             rs = ps.executeQuery();
             if (rs.next()) {
-                profesor.setIdProfesor(rs.getInt(1));
-                profesor.setNameProfesor(rs.getString(2));
-                profesor.setLastNameProfesor(rs.getString(3));
-                profesor.setCodProfesor(rs.getString(4));
-                profesor.setStatusPorfesor(rs.getInt(5));
+                profesor.setIdprofesor(rs.getInt(1));
+                profesor.setnameprofesor(rs.getString(2));
+                profesor.setlastnameprofesor(rs.getString(3));
+                profesor.setcodprofesor(rs.getString(4));
+                profesor.setstatusprofesor(rs.getInt(5));
             }
             return profesor;
         } catch (SQLException ex) {
@@ -150,7 +164,10 @@ public class ProfesoresDAO implements IBDCrud<ProfesoresDTO> {
     @Override
     public ArrayList<ProfesoresDTO> consultarTodoDe(Object campo, Object valorCampo, int tipoCampo) throws BussinessException{
         ArrayList<ProfesoresDTO> profesorArrayList = new ArrayList();
-        SQL_CONSULTAR_TODO_DE = SQL_CONSULTAR_TODO_DE + campo.toString() + " = ?";
+        SQL_CONSULTAR_TODO_DE = "SELECT "
+            + "idprofesor,nameprofesor,lastnameprofesor,codprofesor,statusprofesor "
+            + "FROM PROFESORES "
+            + "WHERE " + campo.toString() + " = ?";
         PreparedStatement ps;
         ResultSet rs;
         ProfesoresDTO profesor;

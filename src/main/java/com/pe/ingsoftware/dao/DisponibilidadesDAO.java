@@ -25,10 +25,21 @@ import org.springframework.stereotype.Component;
 @Component("disponibilidades")
 public class DisponibilidadesDAO implements IBDCrud<DisponibilidadesDTO> {
 
-    private static final String SQL_SELECT_WHERE = "SELECT * FROM DISPONIBILIDADES WHERE iddisponibilidad = ? ";
-    private static final String SQL_SELECT_ALL = "SELECT * FROM DISPONIBILIDADES ";
-    private static String SQL_CONSULTAR_UNO = "SELECT * FROM DISPONIBILIDADES WHERE ";
-    private static String SQL_CONSULTAR_TODO_DE = "SELECT * FROM DISPONIBILIDADES WHERE ";
+    private static final String SQL_SELECT_WHERE = "SELECT "
+            + "iddisponibilidad,cycledisponibilidad,daydisponibilidad,hourstartdisponibilidad,hourenddisponibilidad,statusdisponibilidad,idprofesor "
+            + "FROM DISPONIBILIDADES "
+            + "WHERE iddisponibilidad = ? ";
+    private static final String SQL_SELECT_ALL = "SELECT "
+            + "iddisponibilidad,cycledisponibilidad,daydisponibilidad,hourstartdisponibilidad,hourenddisponibilidad,statusdisponibilidad,idprofesor "
+            + "FROM DISPONIBILIDADES ";
+    private static String SQL_CONSULTAR_UNO = "SELECT "
+            + "iddisponibilidad,cycledisponibilidad,daydisponibilidad,hourstartdisponibilidad,hourenddisponibilidad,statusdisponibilidad,idprofesor"
+            + "FROM DISPONIBILIDADES "
+            + "WHERE ";
+    private static String SQL_CONSULTAR_TODO_DE = "SELECT "
+            + "iddisponibilidad,cycledisponibilidad,daydisponibilidad,hourstartdisponibilidad,hourenddisponibilidad,statusdisponibilidad,idprofesor "
+            + "FROM DISPONIBILIDADES "
+            + "WHERE ";
 
     private static final Conexion cnn = Conexion.crearConexion();
 
@@ -60,7 +71,7 @@ public class DisponibilidadesDAO implements IBDCrud<DisponibilidadesDTO> {
                 ArrayList = null;
             } else {
                 do {
-                    disponibilidad = new DisponibilidadesDTO(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5), rs.getInt(6));
+                    disponibilidad = new DisponibilidadesDTO(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6), rs.getInt(7));
                     ArrayList.add(disponibilidad);
                 } while (rs.next());
             }
@@ -86,11 +97,12 @@ public class DisponibilidadesDAO implements IBDCrud<DisponibilidadesDTO> {
             rs = ps.executeQuery();
             if (rs.next()) {
                 disponibilidad.setIddisponibilidad(rs.getInt(1));
-                disponibilidad.setDaydisponibilidad(rs.getString(2));
-                disponibilidad.setHourstartdisponibilidad(rs.getString(3));
-                disponibilidad.setHourenddisponibilidad(rs.getString(4));
-                disponibilidad.setStatusdisponibilidad(rs.getInt(5));
-                disponibilidad.setIdprofesor(rs.getInt(6));
+                disponibilidad.setCycledisponibilidad(rs.getString(2));
+                disponibilidad.setDaydisponibilidad(rs.getString(3));
+                disponibilidad.setHourstartdisponibilidad(rs.getString(4));
+                disponibilidad.setHourenddisponibilidad(rs.getString(5));
+                disponibilidad.setStatusdisponibilidad(rs.getInt(6));
+                disponibilidad.setIdprofesor(rs.getInt(7));
             }
             return disponibilidad;
         } catch (SQLException ex) {
@@ -105,7 +117,10 @@ public class DisponibilidadesDAO implements IBDCrud<DisponibilidadesDTO> {
 
     @Override
     public DisponibilidadesDTO consultarUno(Object campo, Object valorCampo, int tipoCampo) throws BussinessException{
-        SQL_CONSULTAR_UNO = "SELECT * FROM CURSOS WHERE " + campo.toString() + " = ?";
+        SQL_CONSULTAR_UNO = "SELECT "
+                + "iddisponibilidad,cycledisponibilidad,daydisponibilidad,hourstartdisponibilidad,hourenddisponibilidad,statusdisponibilidad,idprofesor "
+                + "FROM DISPONIBILIDADES "
+                + "WHERE " + campo.toString() + " = ?";
         PreparedStatement ps;
         ResultSet rs;
         DisponibilidadesDTO disponibilidad = new DisponibilidadesDTO();
@@ -132,11 +147,12 @@ public class DisponibilidadesDAO implements IBDCrud<DisponibilidadesDTO> {
             rs = ps.executeQuery();
             if (rs.next()) {
                 disponibilidad.setIddisponibilidad(rs.getInt(1));
-                disponibilidad.setDaydisponibilidad(rs.getString(2));
-                disponibilidad.setHourstartdisponibilidad(rs.getString(3));
-                disponibilidad.setHourenddisponibilidad(rs.getString(4));
-                disponibilidad.setStatusdisponibilidad(rs.getInt(5));
-                disponibilidad.setIdprofesor(rs.getInt(6));
+                disponibilidad.setCycledisponibilidad(rs.getString(2));
+                disponibilidad.setDaydisponibilidad(rs.getString(3));
+                disponibilidad.setHourstartdisponibilidad(rs.getString(4));
+                disponibilidad.setHourenddisponibilidad(rs.getString(5));
+                disponibilidad.setStatusdisponibilidad(rs.getInt(6));
+                disponibilidad.setIdprofesor(rs.getInt(7));
             }
             return disponibilidad;
         } catch (SQLException ex) {
@@ -152,7 +168,10 @@ public class DisponibilidadesDAO implements IBDCrud<DisponibilidadesDTO> {
     @Override
     public ArrayList<DisponibilidadesDTO> consultarTodoDe(Object campo, Object valorCampo, int tipoCampo) throws BussinessException{
         ArrayList<DisponibilidadesDTO> ArrayList = new ArrayList();
-        SQL_CONSULTAR_TODO_DE = "SELECT * FROM CURSOS WHERE " + campo.toString() + " = ?";
+        SQL_CONSULTAR_TODO_DE = "SELECT "
+                + "iddisponibilidad,cycledisponibilidad,daydisponibilidad,hourstartdisponibilidad,hourenddisponibilidad,statusdisponibilidad,idprofesor "
+                + "FROM DISPONIBILIDADES "
+                + "WHERE " + campo.toString() + " = ?";
         PreparedStatement ps;
         ResultSet rs;
         DisponibilidadesDTO disponibilidad;
@@ -181,7 +200,7 @@ public class DisponibilidadesDAO implements IBDCrud<DisponibilidadesDTO> {
                 ArrayList = null;
             } else {
                 do {
-                    disponibilidad = new DisponibilidadesDTO(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5), rs.getInt(6));
+                    disponibilidad = new DisponibilidadesDTO(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6), rs.getInt(7));
                     ArrayList.add(disponibilidad);
                 } while (rs.next());
             }

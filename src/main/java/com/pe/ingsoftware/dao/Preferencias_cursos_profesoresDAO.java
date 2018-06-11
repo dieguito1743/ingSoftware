@@ -25,10 +25,19 @@ import org.springframework.stereotype.Component;
 @Component("preferencias_cursos_profesores")
 public class Preferencias_cursos_profesoresDAO implements IBDCrud<Preferencias_cursos_profesoresDTO> {
 
-    private static final String SQL_SELECT_WHERE = "SELECT * FROM preferencias_cursos_profesores WHERE idcurso = ? ";
-    private static final String SQL_SELECT_ALL = "SELECT * FROM preferencias_cursos_profesores ";
-    private static String SQL_CONSULTAR_UNO = "SELECT * FROM preferencias_cursos_profesores WHERE ";
-    private static String SQL_CONSULTAR_TODO_DE = "SELECT * FROM preferencias_cursos_profesores WHERE ";
+    private static final String SQL_SELECT_WHERE = "SELECT "
+            + "idcurso,idprofesor,cyclepreferencia "
+            + "FROM preferencias_cursos_profesores "
+            + "WHERE idcurso = ? ";
+    private static final String SQL_SELECT_ALL = "SELECT "
+            + "idcurso,idprofesor,cyclepreferencia "
+            + "FROM preferencias_cursos_profesores ";
+    private static String SQL_CONSULTAR_UNO = "SELECT "
+            + "idcurso,idprofesor,cyclepreferencia "
+            + "FROM preferencias_cursos_profesores WHERE ";
+    private static String SQL_CONSULTAR_TODO_DE = "SELECT "
+            + "idcurso,idprofesor,cyclepreferencia "
+            + "FROM preferencias_cursos_profesores WHERE ";
 
     private static final Conexion cnn = Conexion.crearConexion();
 
@@ -60,7 +69,7 @@ public class Preferencias_cursos_profesoresDAO implements IBDCrud<Preferencias_c
                 ArrayList = null;
             } else {
                 do {
-                    preferencias = new Preferencias_cursos_profesoresDTO(rs.getInt(1), rs.getInt(2));
+                    preferencias = new Preferencias_cursos_profesoresDTO(rs.getInt(1), rs.getInt(2), rs.getString(3));
                     ArrayList.add(preferencias);
                 } while (rs.next());
             }
@@ -87,6 +96,7 @@ public class Preferencias_cursos_profesoresDAO implements IBDCrud<Preferencias_c
             if (rs.next()) {
                 preferencias.setIdcurso(rs.getInt(1));
                 preferencias.setIdprofesor(rs.getInt(2));
+                preferencias.setCyclepreferencia(rs.getString(3));
             }
             return preferencias;
         } catch (SQLException ex) {
@@ -101,7 +111,9 @@ public class Preferencias_cursos_profesoresDAO implements IBDCrud<Preferencias_c
 
     @Override
     public Preferencias_cursos_profesoresDTO consultarUno(Object campo, Object valorCampo, int tipoCampo) throws BussinessException{
-        SQL_CONSULTAR_UNO = "SELECT * FROM CURSOS WHERE " + campo.toString() + " = ?";
+        SQL_CONSULTAR_UNO = "SELECT "
+                + "idcurso,idprofesor,cyclepreferencia "
+                + "FROM preferencias_cursos_profesores WHERE " + campo.toString() + " = ?";
         PreparedStatement ps;
         ResultSet rs;
         Preferencias_cursos_profesoresDTO preferencias = new Preferencias_cursos_profesoresDTO();
@@ -129,6 +141,7 @@ public class Preferencias_cursos_profesoresDAO implements IBDCrud<Preferencias_c
             if (rs.next()) {
                 preferencias.setIdcurso(rs.getInt(1));
                 preferencias.setIdprofesor(rs.getInt(2));
+                preferencias.setCyclepreferencia(rs.getString(3));
             }
             return preferencias;
         } catch (SQLException ex) {
@@ -144,7 +157,10 @@ public class Preferencias_cursos_profesoresDAO implements IBDCrud<Preferencias_c
     @Override
     public ArrayList<Preferencias_cursos_profesoresDTO> consultarTodoDe(Object campo, Object valorCampo, int tipoCampo) throws BussinessException{
         ArrayList<Preferencias_cursos_profesoresDTO> ArrayList = new ArrayList();
-        SQL_CONSULTAR_TODO_DE = "SELECT * FROM CURSOS WHERE " + campo.toString() + " = ?";
+        SQL_CONSULTAR_TODO_DE = "SELECT "
+                + "idcurso,idprofesor,cyclepreferencia "
+                + "FROM preferencias_cursos_profesores "
+                + "WHERE " + campo.toString() + " = ?";
         PreparedStatement ps;
         ResultSet rs;
         Preferencias_cursos_profesoresDTO preferencias;
@@ -173,7 +189,7 @@ public class Preferencias_cursos_profesoresDAO implements IBDCrud<Preferencias_c
                 ArrayList = null;
             } else {
                 do {
-                    preferencias = new Preferencias_cursos_profesoresDTO(rs.getInt(1), rs.getInt(2));
+                    preferencias = new Preferencias_cursos_profesoresDTO(rs.getInt(1), rs.getInt(2), rs.getString(3));
                     ArrayList.add(preferencias);
                 } while (rs.next());
             }
