@@ -63,7 +63,7 @@ public class ProfesoresDAO implements IBDCrud<ProfesoresDTO> {
         ArrayList<ProfesoresDTO> profesorArrayList = new ArrayList();
         PreparedStatement ps;
         ResultSet rs;
-        ProfesoresDTO profesor;
+        ProfesoresDTO objetoDTO;
         try {
             ps = cnn.getCnn().prepareStatement(SQL_SELECT_ALL);
             rs = ps.executeQuery();
@@ -71,8 +71,8 @@ public class ProfesoresDAO implements IBDCrud<ProfesoresDTO> {
                 profesorArrayList = null;
             } else {
                 do {
-                    profesor = new ProfesoresDTO(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5));
-                    profesorArrayList.add(profesor);
+                    objetoDTO = new ProfesoresDTO(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5));
+                    profesorArrayList.add(objetoDTO);
                 } while (rs.next());
             }
             return profesorArrayList;
@@ -163,7 +163,7 @@ public class ProfesoresDAO implements IBDCrud<ProfesoresDTO> {
 
     @Override
     public ArrayList<ProfesoresDTO> consultarTodoDe(Object campo, Object valorCampo, int tipoCampo) throws BussinessException{
-        ArrayList<ProfesoresDTO> profesorArrayList = new ArrayList();
+        ArrayList<ProfesoresDTO> objetoArrayList = new ArrayList();
         SQL_CONSULTAR_TODO_DE = "SELECT "
             + "idprofesor,nameprofesor,lastnameprofesor,codprofesor,statusprofesor "
             + "FROM PROFESORES "
@@ -193,14 +193,14 @@ public class ProfesoresDAO implements IBDCrud<ProfesoresDTO> {
             }
             rs = ps.executeQuery();
             if (!rs.next()) {
-                profesorArrayList = null;
+                objetoArrayList = null;
             } else {
                 do {
                     profesor = new ProfesoresDTO(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5));
-                    profesorArrayList.add(profesor);
+                    objetoArrayList.add(profesor);
                 } while (rs.next());
             }
-            return profesorArrayList;
+            return objetoArrayList;
         } catch (SQLException ex) {
             Logger.getLogger(ProfesoresDTO.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
@@ -208,7 +208,7 @@ public class ProfesoresDAO implements IBDCrud<ProfesoresDTO> {
         } finally {
             cnn.cerrarConexion();
         }
-        return profesorArrayList;
+        return objetoArrayList;
     }
 
     @Override
