@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jboss-web>
-  <context-root>/ingenieriaSoftware</context-root>
+  <context-root>/IngSoftware</context-root>
 </jboss-web>
