@@ -81,11 +81,16 @@ public class Preferencias_cursos_profesoresController {
     public void consultarTodo(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
         try {
             ArrayList<Preferencias_cursos_profesoresDTO> arrayList = crud.consultarTodo();
-            String jsonSalida = jsonTransformer.toJson(arrayList);
+            if(arrayList != null && !arrayList.isEmpty()) {
+                String jsonSalida = jsonTransformer.toJson(arrayList);
 
-            httpServletResponse.setStatus(HttpServletResponse.SC_OK);
-            httpServletResponse.setContentType("application/json; charset=UTF-8");
-            httpServletResponse.getWriter().println(jsonSalida);
+                httpServletResponse.setStatus(HttpServletResponse.SC_OK);
+                httpServletResponse.setContentType("application/json; charset=UTF-8");
+                httpServletResponse.getWriter().println(jsonSalida);
+            }else {
+            	httpServletResponse.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                httpServletResponse.setContentType("application/json; charset=UTF-8");
+            }
 
         } catch (BussinessException ex) {
             List<BussinessMessage> bussinessMessage = ex.getBussinessMessages();

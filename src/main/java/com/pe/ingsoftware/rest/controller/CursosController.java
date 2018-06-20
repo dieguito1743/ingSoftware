@@ -43,11 +43,16 @@ public class CursosController {
     public void consultarTodo(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
         try {
             ArrayList<CursosDTO> arrayList = crud.consultarTodo();
-            String jsonSalida = jsonTransformer.toJson(arrayList);
+            if(arrayList != null && !arrayList.isEmpty()) {
+                String jsonSalida = jsonTransformer.toJson(arrayList);
 
-            httpServletResponse.setStatus(HttpServletResponse.SC_OK);
-            httpServletResponse.setContentType("application/json; charset=UTF-8");
-            httpServletResponse.getWriter().println(jsonSalida);
+                httpServletResponse.setStatus(HttpServletResponse.SC_OK);
+                httpServletResponse.setContentType("application/json; charset=UTF-8");
+                httpServletResponse.getWriter().println(jsonSalida);
+            }else {
+            	httpServletResponse.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                httpServletResponse.setContentType("application/json; charset=UTF-8");
+            }
 
         } catch (BussinessException ex) {
             List<BussinessMessage> bussinessMessage = ex.getBussinessMessages();
@@ -77,11 +82,16 @@ public class CursosController {
     public void consultarUno(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, @PathVariable("id") String id) {
         try {
             CursosDTO objetoDTO = (CursosDTO) crud.consultarUno(id);
-            String jsonSalida = jsonTransformer.toJson(objetoDTO);
+            if(objetoDTO != null) {
+                String jsonSalida = jsonTransformer.toJson(objetoDTO);
 
-            httpServletResponse.setStatus(HttpServletResponse.SC_OK);
-            httpServletResponse.setContentType("application/json; charset=UTF-8");
-            httpServletResponse.getWriter().println(jsonSalida);
+                httpServletResponse.setStatus(HttpServletResponse.SC_OK);
+                httpServletResponse.setContentType("application/json; charset=UTF-8");
+                httpServletResponse.getWriter().println(jsonSalida);
+            }else {
+            	httpServletResponse.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                httpServletResponse.setContentType("application/json; charset=UTF-8");
+            }
 
         } catch (BussinessException ex) {
             List<BussinessMessage> bussinessMessage = ex.getBussinessMessages();
@@ -110,11 +120,16 @@ public class CursosController {
     public void consultarProgramas(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
         try {
             ArrayList<CursosDTO> arrayList = crud.selectPrograma();
-            String jsonSalida = jsonTransformer.toJson(arrayList);
+            if(arrayList != null && !arrayList.isEmpty()) {
+                String jsonSalida = jsonTransformer.toJson(arrayList);
 
-            httpServletResponse.setStatus(HttpServletResponse.SC_OK);
-            httpServletResponse.setContentType("application/json; charset=UTF-8");
-            httpServletResponse.getWriter().println(jsonSalida);
+                httpServletResponse.setStatus(HttpServletResponse.SC_OK);
+                httpServletResponse.setContentType("application/json; charset=UTF-8");
+                httpServletResponse.getWriter().println(jsonSalida);
+            }else {
+            	httpServletResponse.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                httpServletResponse.setContentType("application/json; charset=UTF-8");
+            }
 
         } catch (BussinessException ex) {
             List<BussinessMessage> bussinessMessage = ex.getBussinessMessages();
@@ -144,12 +159,16 @@ public class CursosController {
     public void consultarPlanes(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, @PathVariable("id") String id) {
         try {
             ArrayList<CursosDTO> arrayList = crud.selectPlan(id);
-            String jsonSalida = jsonTransformer.toJson(arrayList);
+            if(arrayList != null && !arrayList.isEmpty()) {
+                String jsonSalida = jsonTransformer.toJson(arrayList);
 
-            httpServletResponse.setStatus(HttpServletResponse.SC_OK);
-            httpServletResponse.setContentType("application/json; charset=UTF-8");
-            httpServletResponse.getWriter().println(jsonSalida);
-
+                httpServletResponse.setStatus(HttpServletResponse.SC_OK);
+                httpServletResponse.setContentType("application/json; charset=UTF-8");
+                httpServletResponse.getWriter().println(jsonSalida);
+            }else {
+            	httpServletResponse.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                httpServletResponse.setContentType("application/json; charset=UTF-8");
+            }
         } catch (BussinessException ex) {
             List<BussinessMessage> bussinessMessage = ex.getBussinessMessages();
             String jsonSalida = jsonTransformer.toJson(bussinessMessage);
@@ -176,12 +195,17 @@ public class CursosController {
     @RequestMapping(value = "/cursos/programa/{id1}/plan/{id2}", method = RequestMethod.GET, produces = "application/json")
     public void consultarTodo(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, @PathVariable("id1") String id1, @PathVariable("id2") String id2) {
         try {
-            ArrayList<CursosDTO> objetoDTO = crud.consultarTodoDe("programcurso", id1, 2, "plancurso", id2, 2);
-            String jsonSalida = jsonTransformer.toJson(objetoDTO);
+            ArrayList<CursosDTO> arrayList = crud.consultarTodoDe("programcurso", id1, 2, "plancurso", id2, 2);
+            if(arrayList != null && !arrayList.isEmpty()) {
+                String jsonSalida = jsonTransformer.toJson(arrayList);
 
-            httpServletResponse.setStatus(HttpServletResponse.SC_OK);
-            httpServletResponse.setContentType("application/json; charset=UTF-8");
-            httpServletResponse.getWriter().println(jsonSalida);
+                httpServletResponse.setStatus(HttpServletResponse.SC_OK);
+                httpServletResponse.setContentType("application/json; charset=UTF-8");
+                httpServletResponse.getWriter().println(jsonSalida);
+            }else {
+            	httpServletResponse.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                httpServletResponse.setContentType("application/json; charset=UTF-8");
+            }
 
         } catch (BussinessException ex) {
             List<BussinessMessage> bussinessMessage = ex.getBussinessMessages();

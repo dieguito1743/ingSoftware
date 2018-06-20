@@ -42,8 +42,9 @@ public class UsuarioController {
     @RequestMapping(value = "/usuario/user/{user}/pass/{pass}", method = RequestMethod.GET, produces = "application/json")
     public void consultarUno(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, @PathVariable("user") String user, @PathVariable("pass") String pass) {
         try {
+        	//extraer la configuracion asignada por el administrador
             UsuariosDTO objetoDTO = (UsuariosDTO) crud.consultarUno("useremail", user, 2);
-            if (user.equalsIgnoreCase(objetoDTO.getUseremail()) && pass.equals(objetoDTO.getUserpass())) {
+            if (objetoDTO != null && objetoDTO.getUseremail() != null && user.equalsIgnoreCase(objetoDTO.getUseremail()) && pass.equals(objetoDTO.getUserpass())) {
                 objetoDTO.setUserpass("**********");
                 objetoDTO.setTimeOut(60);
                 String jsonUsuario = jsonTransformer.toJson(objetoDTO);
@@ -85,17 +86,17 @@ public class UsuarioController {
     public void insertar(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, @RequestBody String jsonEntrada) {
         try {
             UsuariosDTO objetoDTO = (UsuariosDTO) jsonTransformer.fromJSON(jsonEntrada, UsuariosDTO.class);
-            if (crud.insertar(objetoDTO) > 0) {
+            int i = 0;
+            if ((i = crud.insertar(objetoDTO)) > 0) {
+            	objetoDTO.setIdusuario(i);
                 String jsonSalida = jsonTransformer.toJson(objetoDTO);
 
                 httpServletResponse.setStatus(HttpServletResponse.SC_OK);
                 httpServletResponse.setContentType("application/json; charset=UTF-8");
                 httpServletResponse.getWriter().println(jsonSalida);
             } else {
-                String jsonSalida = "{result: null}";
-                httpServletResponse.setStatus(HttpServletResponse.SC_OK);
+                httpServletResponse.setStatus(HttpServletResponse.SC_BAD_REQUEST);
                 httpServletResponse.setContentType("application/json; charset=UTF-8");
-                httpServletResponse.getWriter().println(jsonSalida);
             }
         } catch (BussinessException ex) {
             List<BussinessMessage> bussinessMessage = ex.getBussinessMessages();
@@ -125,11 +126,16 @@ public class UsuarioController {
     public void consultarTodo(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
         try {
             ArrayList<UsuariosDTO> arrayList = crud.consultarTodo();
-            String jsonSalida = jsonTransformer.toJson(arrayList);
+            if(arrayList != null && !arrayList.isEmpty()) {
+                String jsonSalida = jsonTransformer.toJson(arrayList);
 
-            httpServletResponse.setStatus(HttpServletResponse.SC_OK);
-            httpServletResponse.setContentType("application/json; charset=UTF-8");
-            httpServletResponse.getWriter().println(jsonSalida);
+                httpServletResponse.setStatus(HttpServletResponse.SC_OK);
+                httpServletResponse.setContentType("application/json; charset=UTF-8");
+                httpServletResponse.getWriter().println(jsonSalida);
+            }else {
+            	httpServletResponse.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                httpServletResponse.setContentType("application/json; charset=UTF-8");
+            }
 
         } catch (BussinessException ex) {
             List<BussinessMessage> bussinessMessage = ex.getBussinessMessages();
@@ -167,11 +173,8 @@ public class UsuarioController {
                 httpServletResponse.setContentType("application/json; charset=UTF-8");
                 httpServletResponse.getWriter().println(jsonSalida);
             } else {
-                String jsonSalida = "{result: none}";
-
-                httpServletResponse.setStatus(HttpServletResponse.SC_OK);
+                httpServletResponse.setStatus(HttpServletResponse.SC_BAD_REQUEST);
                 httpServletResponse.setContentType("application/json; charset=UTF-8");
-                httpServletResponse.getWriter().println(jsonSalida);
             }
 
         } catch (BussinessException ex) {

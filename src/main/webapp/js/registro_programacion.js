@@ -248,7 +248,7 @@ function verProgramacion() {
     $('#ver').click(function () {
         $.ajax({
             type: "GET",
-            url: '/IngSoftware/programaciones/reporte/20181',
+            url: '/IngSoftware/programaciones/reporte/20182',
             dataType: "json",
             success: function (data) {
                 var programaciones = data;
@@ -267,7 +267,7 @@ function verProgramacion() {
                 $('#verprogramaciones').dialog('open');
             },
             error: function (data) {
-                alert('error verCursosProgramadors');
+            	alert('No hay registro alguno');
             }
         });
     });

@@ -128,13 +128,17 @@ public class DisponibilidadesController {
             ArrayList<DisponibilidadesDTO> arrayList = crud.consultarTodoDe("idprofesor", idprofesor, 0);
             ProgramacionesDTO objetoDTO = (ProgramacionesDTO) crud2.consultarUno("idcurso", idcurso, 0);
             ArrayList<Programaciones_horariosDTO> arrayList2 = crud4.consultarTodoDe("idprogramacion", objetoDTO.getIdprogramacion(), 0);
-            for (Programaciones_horariosDTO objetoAux : arrayList2) {
-                //hay que pasarle otro parametro cyclehorario para que valide el ciclo del horario pero falta implementar el metodo
-                ArrayList<HorariosDTO> arrayList3 = crud3.consultarTodoDe("idhorario", objetoAux.getIdhorario(), 0);
-                for (int i = arrayList.size() - 1; i >= 0; i--) {
-                    for (int y = arrayList3.size() - 1; y >= 0; y--) {
-                        if (arrayList.get(i).getDaydisponibilidad().equalsIgnoreCase(arrayList3.get(y).getDayhorario())) {
-                            retornar = true;//si hay disponibilidad retornara una respuesta acertada con la disonibilidad del profesor
+            if(arrayList2 != null && arrayList != null && objetoDTO != null && !arrayList2.isEmpty()) {
+                for (Programaciones_horariosDTO objetoAux : arrayList2) {
+                    //hay que pasarle otro parametro cyclehorario para que valide el ciclo del horario pero falta implementar el metodo
+                    ArrayList<HorariosDTO> arrayList3 = crud3.consultarTodoDe("idhorario", objetoAux.getIdhorario(), 0);
+                    if(arrayList3 != null && !arrayList3.isEmpty()) {
+                        for (int i = arrayList.size() - 1; i >= 0; i--) {
+                            for (int y = arrayList3.size() - 1; y >= 0; y--) {
+                                if (arrayList.get(i).getDaydisponibilidad().equalsIgnoreCase(arrayList3.get(y).getDayhorario())) {
+                                    retornar = true;//si hay disponibilidad retornara una respuesta acertada con la disonibilidad del profesor
+                                }
+                            }
                         }
                     }
                 }

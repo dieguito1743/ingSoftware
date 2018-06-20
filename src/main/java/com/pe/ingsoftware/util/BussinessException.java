@@ -6,6 +6,8 @@ package com.pe.ingsoftware.util;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
 /**
  *
  * @author dbermudez
