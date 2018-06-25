@@ -2,8 +2,15 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+        <meta name="viewport" content="width=device-width, user-scalable=false;" />
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link rel="icon" type="image/png" href="img/favicon.jpg" />
+        <link rel="stylesheet" href="css/iconmoon/style.css">
+        <link rel="stylesheet" href="css/style_main.css">
+        <!--script src="http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.min.js"></script-->
+  		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <script src="js/main.js"></script>
         <title>Registro de Horarios -- Curso, Profesor</title>
     </head>
@@ -13,7 +20,7 @@
         <nav class="navbar navbar-inverse">
             <div class="container-fluid">
                 <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar" id="buttonNav">
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
@@ -22,20 +29,21 @@
                 </div>
                 <div class="collapse navbar-collapse" id="myNavbar">
                     <ul class="nav navbar-nav">
-                        <li><a href="principal.html" target="content">Inicio</a></li>
-                        <li><a href="registro_programacion.html" target="content">Programar Horario-Curso</a></li>
-                        <li><a href="registro_programacion_profesor.html" target="content">Asignar Profesor</a></li>
-                        <li><a href="#">Asignar Aulas</a></li>
-                        <li><a href="#">Generar Sesiones</a></li>
-                        <li><a href="#">Reportes</a></li>
+                        <li><a href="principal.html" target="content"><span class = "icon-home" title="Inicio"><span id="001"> Inicio</span></span></a></li>
+                        <li><a href="registro_programacion.html" target="content"><span class="icon-books" title="Programacion Cursos"><span id="002"> Programacion Cursos</span></span></a></li>
+                        <li><a href="registro_programacion_profesor.html" target="content"><span class="icon-profile" title="Asignar Profesor"><span id="003"> Asignar Profesor</span></span></a></li>
+                        <li><a href="#"><span class="icon-drawer" title ="Asignar Aulas"><span id="004"> Asignar Aulas</span></span></a></li>
+                        <li><a href="#"><span class="icon-search" title="Busquedas"><span id="005"> Busquedas</span></span></a></li>
+                        <li><a href="#"><span class="icon-calendar" title="Generar Sesiones"><span id="006"> Generar Sesiones</span></span></a></li>
+                        <li><a href="#"><span class="icon-stats-bars" title="Reportes"><span id="007"> Reportes</span></span></a></li>
+                        <li id ="onlyadmin"><a href="#"><span class="icon-cog" title="Congiuraciones"><span id="008"> Congiuraciones</span></span></a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="login.html"><span class="glyphicon glyphicon-log-in"></span> LogOut</a></li>
+                        <li><a href="login.html"><span class="glyphicon glyphicon-log-in"></span><span class="LogOut"> LogOut</span></a></li>
                     </ul>
                 </div>
             </div>
         </nav>
-
         <iframe id="content" name="content" src="principal.html" scrolling="no" border="0" frameborder="0" width="100%" height="600" marginwidth="0" marginheight="0"></iframe>
         <br />
         <iframe id="footer" name="footer" src="foot.html" scrolling="no" border="0" frameborder="0" width="100%" height="80" marginwidth="0" marginheight="0"></iframe>

@@ -44,13 +44,13 @@ public class MainTest {
     //@Qualifier("profesores")
     //private static IBDCrud profesores;
     public static void main(String[] args) {
-        reportesTest("20181");
+        //reportesTest("20181");
         //profesoresTest();
         //cursosTetst();
         //disponibilidadesTest();
         //horas_cursosTest();
         //preferencias_cursos_profesoresTest();
-        //listar_programa_cursos();
+        listar_programa_cursos();
         //listar_plan_cursos();
     }
 

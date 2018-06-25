@@ -51,7 +51,8 @@ public class ProgramacionesDAO implements IBDCrud<ProgramacionesDTO> {
         ResultSet rs;
         try {
             ps = cnn.getCnn().prepareStatement(SQL_INSERT, PreparedStatement.RETURN_GENERATED_KEYS);
-            ps.setInt(1, objetoNuevo.getIdprofesor());
+            //ps.setInt(1, objetoNuevo.getIdprofesor());
+            ps.setNull(1,java.sql.Types.INTEGER);
             ps.setInt(2, objetoNuevo.getIdcurso());
             ps.setInt(3, objetoNuevo.getIdusuario());
             ps.setInt(4, objetoNuevo.getCycleprogramacion());

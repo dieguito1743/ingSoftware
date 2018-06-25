@@ -92,6 +92,152 @@ function obtenerCurso() {
     });
 }
 function setInit() {
+	for(var ii = 1; ii< 4; ii++){
+		$('#horainicio'+ii).mask('99:99', {placeholder:"HH:MM"});
+		$('#horafin'+ii).mask('99:99', {placeholder:"HH:MM"});
+	}
+	$('#horainicio1').keyup(function(){
+		var val = $('#horainicio1').val();
+		try{
+			if(val.length == 1 && val > 2){
+				$('#horainicio1').val('');
+			}
+			if(val.length == 2 && val > 24){
+				$('#horainicio1').val('');
+			}
+			if(val.length == 3 && val.substring(0,2) > 24){
+				$('#horainicio1').val('');
+			}
+			if(val.length == 4 && val.substring(3,4) > 6){
+				$('#horainicio1').val('');
+			}
+			if(val.length == 5 && val.substring(3,5) > 60 || val.substring(0,2) > 24){
+				$('#horainicio1').val('');
+			}
+			if(val.length == 5 && val.substring(3,5) < 60 && val.substring(0,2) < 24){
+				$('#horafin1').focus();
+			}
+		}catch(e){
+			return;
+		}
+    });
+	$('#horafin1').keyup(function(){
+		var val = $('#horafin1').val();
+		try{
+			if(val.length == 1 && val > 2){
+				$('#horafin1').val('');
+			}
+			if(val.length == 2 && val > 24){
+				$('#horafin1').val('');
+			}
+			if(val.length == 3 && val.substring(0,2) > 24){
+				$('#horafin1').val('');
+			}
+			if(val.length == 4 && val.substring(3,4) > 6){
+				$('#horafin1').val('');
+			}
+			if(val.length == 5 && val.substring(3,5) > 60 || val.substring(0,2) > 24){
+				$('#horafin1').val('');
+			}
+		}catch(e){
+			return;
+		}
+    });
+	$('#horainicio2').keyup(function(){
+		var val = $('#horainicio2').val();
+		try{
+			if(val.length == 1 && val > 2){
+				$('#horainicio2').val('');
+			}
+			if(val.length == 2 && val > 24){
+				$('#horainicio2').val('');
+			}
+			if(val.length == 3 && val.substring(0,2) > 24){
+				$('#horainicio2').val('');
+			}
+			if(val.length == 4 && val.substring(3,4) > 6){
+				$('#horainicio2').val('');
+			}
+			if(val.length == 5 && val.substring(3,5) > 60 || val.substring(0,2) > 24){
+				$('#horainicio2').val('');
+			}
+			if(val.length == 5 && val.substring(3,5) < 60 && val.substring(0,2) < 24){
+				$('#horafin2').focus();
+			}
+		}catch(e){
+			return;
+		}
+    });
+	$('#horafin2').keyup(function(){
+		var val = $('#horafin2').val();
+		try{
+			if(val.length == 1 && val > 2){
+				$('#horafin2').val('');
+			}
+			if(val.length == 2 && val > 24){
+				$('#horafin2').val('');
+			}
+			if(val.length == 3 && val.substring(0,2) > 24){
+				$('#horafin2').val('');
+			}
+			if(val.length == 4 && val.substring(3,4) > 6){
+				$('#horafin2').val('');
+			}
+			if(val.length == 5 && val.substring(3,5) > 60 || val.substring(0,2) > 24){
+				$('#horafin2').val('');
+			}
+		}catch(e){
+			return;
+		}
+    });
+	$('#horainicio3').keyup(function(){
+		var val = $('#horainicio3').val();
+		try{
+			if(val.length == 1 && val > 2){
+				$('#horainicio3').val('');
+			}
+			if(val.length == 2 && val > 24){
+				$('#horainicio3').val('');
+			}
+			if(val.length == 3 && val.substring(0,2) > 24){
+				$('#horainicio3').val('');
+			}
+			if(val.length == 4 && val.substring(3,4) > 6){
+				$('#horainicio3').val('');
+			}
+			if(val.length == 5 && val.substring(3,5) > 60 || val.substring(0,2) > 24){
+				$('#horainicio3').val('');
+			}
+			if(val.length == 5 && val.substring(3,5) < 60 && val.substring(0,2) < 24){
+				$('#horafin3').focus();
+			}
+		}catch(e){
+			return;
+		}
+    });
+	$('#horafin3').keyup(function(){
+		var val = $('#horafin3').val();
+		try{
+			if(val.length == 1 && val > 2){
+				$('#horafin3').val('');
+			}
+			if(val.length == 2 && val > 24){
+				$('#horafin3').val('');
+			}
+			if(val.length == 3 && val.substring(0,2) > 24){
+				$('#horafin3').val('');
+			}
+			if(val.length == 4 && val.substring(3,4) > 6){
+				$('#horafin3').val('');
+			}
+			if(val.length == 5 && val.substring(3,5) > 60 || val.substring(0,2) > 24){
+				$('#horafin3').val('');
+			}
+		}catch(e){
+			return;
+		}
+    });
+	$('#infoprogramacion').hide();
     $('#cuerpo1').hide();
     $('#cuerpo2').hide();
     $('#cuerpo3').hide();
@@ -120,6 +266,7 @@ function setInit() {
         } else {
             $('#cuerpo1').show();
         }
+        obtenerHoras();
     });
 }
 function registrarHorario_Curso() {
@@ -129,19 +276,15 @@ function registrarHorario_Curso() {
 }
 
 function registrarHorario() {
+	var stored = localStorage['config'];
+    if (stored)
+        myVar = JSON.parse(stored);
     var dt = new Date();
     var month = dt.getMonth() + 1;
-    var numberCycle = '1';
-    if (parseInt(month) > 2 && parseInt(month) < 7) {
-        numberCycle = '2';
-    }
-    if (parseInt(month) > 6 && parseInt(month) < 13) {
-        numberCycle = '0';
-    }
-    var cyclehorarioVal = dt.getFullYear() + numberCycle;
+    var cyclehorarioVal = myVar.cycleconfiguracion;
     var dayhorarioVal = $('#dia1').val();
-    var timestarthorarioVal = $('#horainicio1').val();
-    var timeendhorarioVal = $('#horafin1').val();
+    var timestarthorarioVal = $('#horainicio1').val()+':00';
+    var timeendhorarioVal = $('#horafin1').val()+':00';
     var dataOut = {idhorario: 0,
         cyclehorario: cyclehorarioVal,
         dayhorario: dayhorarioVal,
@@ -161,8 +304,7 @@ function registrarHorario() {
         },
         error: function (data) {
             $('#resultadoFAIL').show();
-            $("#resultadoFAIL").fadeOut(2000);
-            alert('error registrarHorario');
+            $("#resultadoFAIL").fadeOut(6000);
         }
     });
 }
@@ -174,7 +316,7 @@ function registrarProgramacion(horario, cyclehorarioVal) {
 
     var curso = $('#curso').val();
     var idcursoVal = parseInt(curso);
-    var idprofesorVal = 44;//sin profesor
+    var idprofesorVal = null;//sin profesor
     var idprogramacionVal = 0;
     var idusuarioVal = myVar.idusuario;
     var groupprogramacionVal = 1;
@@ -199,7 +341,7 @@ function registrarProgramacion(horario, cyclehorarioVal) {
         },
         error: function (data) {
             $('#resultadoFAIL').show();
-            $("#resultadoFAIL").fadeOut(2000);
+            $("#resultadoFAIL").fadeOut(6000);
         }
     });
 }
@@ -238,26 +380,33 @@ function registrarProgramacion_Horario(idhorarioVal, idprogramacionVal) {
         },
         error: function (data) {
             $('#resultadoFAIL').show();
-            $("#resultadoFAIL").fadeOut(5000);
+            $("#resultadoFAIL").fadeOut(6000);
         }
     });
 }
 
 function verProgramacion() {
+	var stored = localStorage['config'];
+    if (stored)
+        myVar = JSON.parse(stored);
     $('#programaciones').empty();
     $('#ver').click(function () {
         $.ajax({
             type: "GET",
-            url: '/IngSoftware/programaciones/reporte/20182',
+            url: '/IngSoftware/programaciones/reporte/'+myVar.cycleconfiguracion,
             dataType: "json",
             success: function (data) {
                 var programaciones = data;
                 var String1 = '<div id="verprogramaciones" title="Programaciones" style="display:none"></div>';
                 $("#programaciones").append(String1);
                 $.each(programaciones, function (key, registro) {
+                	var nameprofesor = registro.nameprofesor;
+                	if(nameprofesor == null || nameprofesor == ''){
+                		nameprofesor = 'SIN PROFESOR ASIGNADO';
+                	}
                     var string2 = '<div class="form-inline">';
                     var string3 = '<input class="form-control" style="width:338px;" type="text" disabled value="' + registro.namecurso + '" title="' + registro.namecurso + '"/>';
-                    var string4 = '<input type="text" disabled class="form-control" style="width:338px;" value="' + registro.nameprofesor + '" title="' + registro.nameprofesor + '"/>';
+                    var string4 = '<input type="text" disabled class="form-control" style="width:338px;" value="' + nameprofesor + '" title="' + nameprofesor + '"/>';
                     var string5 = '</div>';
                     var stringfinal = string2 + string3 + string4 + string5;
                     $("#verprogramaciones").append(stringfinal);
@@ -267,8 +416,31 @@ function verProgramacion() {
                 $('#verprogramaciones').dialog('open');
             },
             error: function (data) {
-            	alert('No hay registro alguno');
+            	$('#infoprogramacion').show();
+                $("#infoprogramacion").fadeOut(5000);
+            	//alert('No hay registro alguno');
             }
         });
+    });
+}
+
+function obtenerHoras() {
+	var curso = $('#curso').val();
+    var idcursoVal = parseInt(curso);
+	$.ajax({
+        type: "GET",
+        url: '/IngSoftware/horas_cursos/'+idcursoVal,
+        dataType: "json",
+        success: function (data) {
+            var horas_cursos = data;
+            var horas_total = 0;
+            $.each(horas_cursos, function (key, registro) {
+                horas_total = horas_total+registro.numberhourhora_curso;
+            });
+            $('#horascurso').val(horas_total);
+        },
+        error: function (data) {
+        	$('#horascurso').val('0');
+        }
     });
 }

@@ -1,6 +1,12 @@
 // JavaScript Document
 $(document).ready(function() {
+	for(var i = 1; i < 9; i++){
+		$('#00'+i).hide();
+	}
     timeOutSesion();
+    activarButtonNav();
+    butonTimeOut();
+    setInterval(butonTimeOut, 1500);
 });
 
 function timeOutSesion() {
@@ -21,4 +27,29 @@ function timeOutSesion() {
 function verificarSesion() {
     var url = "login.html";
     $(location).attr('href', url);
+}
+
+function activarButtonNav(){
+	$('#buttonNav').click(function(){
+		for(var i = 1; i < 9; i++){
+			$('#00'+i).show();
+		}
+		
+	});
+}
+
+function butonTimeOut(){
+	try {
+    	var display = $('#buttonNav').css('display');
+    	if(display != 'block'){
+    		for(var i = 1; i < 9; i++){
+    			$('#00'+i).hide();
+    		}
+    	}else{
+    		for(var i = 1; i < 9; i++){
+    			$('#00'+i).show();
+    		}
+    	}
+	} catch (e) {
+    }
 }

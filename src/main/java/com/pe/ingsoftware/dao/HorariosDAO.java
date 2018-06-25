@@ -52,6 +52,9 @@ public class HorariosDAO implements IBDCrud<HorariosDTO> {
 
     @Override
     public int insertar(HorariosDTO objetoNuevo) throws BussinessException {
+    	int retorno = -1;
+        PreparedStatement ps;
+        ResultSet rs;
         SimpleDateFormat sdf = new SimpleDateFormat("HH:MM:SS");
         Calendar calendar = GregorianCalendar.getInstance();
         Date today = null;
@@ -65,11 +68,9 @@ public class HorariosDAO implements IBDCrud<HorariosDTO> {
             calendar.setTime(today);
             timeEnd = new Time(calendar.getTimeInMillis());
         } catch (Exception e) {
-            e.printStackTrace();
+        	e.printStackTrace();
+            return retorno;
         }
-        int retorno = -1;
-        PreparedStatement ps;
-        ResultSet rs;
         try {
             ps = cnn.getCnn().prepareStatement(SQL_INSERT, PreparedStatement.RETURN_GENERATED_KEYS);
             ps.setInt(1, objetoNuevo.getCyclehorario());
@@ -135,20 +136,20 @@ public class HorariosDAO implements IBDCrud<HorariosDTO> {
     public HorariosDTO consultarUno(Object primaryKey) throws BussinessException {
         PreparedStatement ps;
         ResultSet rs;
-        HorariosDTO horario = new HorariosDTO();
+        HorariosDTO objetoDTO = new HorariosDTO();
         try {
             ps = cnn.getCnn().prepareStatement(SQL_SELECT_WHERE);
             ps.setInt(1, Integer.parseInt(primaryKey.toString()));
             rs = ps.executeQuery();
             if (rs.next()) {
-                horario.setIdhorario(rs.getInt(1));
-                horario.setCyclehorario(rs.getInt(2));
-                horario.setDayhorario(rs.getString(3));
-                horario.setTimestarthorario(rs.getString(4));
-                horario.setTimeendhorario(rs.getString(5));
-                horario.setStatushorario(rs.getInt(6));
+                objetoDTO.setIdhorario(rs.getInt(1));
+                objetoDTO.setCyclehorario(rs.getInt(2));
+                objetoDTO.setDayhorario(rs.getString(3));
+                objetoDTO.setTimestarthorario(rs.getString(4));
+                objetoDTO.setTimeendhorario(rs.getString(5));
+                objetoDTO.setStatushorario(rs.getInt(6));
             }
-            return horario;
+            return objetoDTO;
         } catch (SQLException ex) {
             Logger.getLogger(HorariosDTO.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
@@ -156,7 +157,7 @@ public class HorariosDAO implements IBDCrud<HorariosDTO> {
         } finally {
             cnn.cerrarConexion();
         }
-        return horario;
+        return objetoDTO;
     }
 
     @Override

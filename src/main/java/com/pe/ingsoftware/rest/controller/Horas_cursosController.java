@@ -42,9 +42,9 @@ public class Horas_cursosController {
     @RequestMapping(value = "/horas_cursos/{id}", method = RequestMethod.GET, produces = "application/json")
     public void consultarUno(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, @PathVariable("id") String id) {
         try {
-            Horas_cursosDTO objetoDTO = (Horas_cursosDTO) crud.consultarUno(id);
-            if(objetoDTO != null) {
-                String jsonSalida = jsonTransformer.toJson(objetoDTO);
+            ArrayList<Horas_cursosDTO> arrayList = crud.consultarTodoDe("idcurso",id,0);
+            if(arrayList != null && !arrayList.isEmpty()) {
+                String jsonSalida = jsonTransformer.toJson(arrayList);
 
                 httpServletResponse.setStatus(HttpServletResponse.SC_OK);
                 httpServletResponse.setContentType("application/json; charset=UTF-8");

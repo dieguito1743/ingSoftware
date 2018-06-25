@@ -117,6 +117,7 @@ function getCurso() {
 }
 
 function setInit() {
+	$('#infoprogramacion').hide();
     $('#resultadoOK').hide();
     $('#resultadoFAIL').hide();
     $("#plan").change(function () {
@@ -255,11 +256,11 @@ function registrarProgramacion_profesor() {
                         var programacion = data;
                         console.log(programacion);
                         $('#resultadoOK').show();
-                        $("#resultadoOK").fadeOut(2000);
+                        $("#resultadoOK").fadeOut(6000);
                     },
                     error: function (data) {
                         $('#resultadoFAIL').show();
-                        $("#resultadoFAIL").fadeOut(2000);
+                        $("#resultadoFAIL").fadeOut(6000);
                     }
                 });
             }
@@ -293,7 +294,9 @@ function verProgramacion() {
                 $('#verprogramaciones').dialog('open');
             },
             error: function (data) {
-                alert('No hay registro alguno');
+            	$('#infoprogramacion').show();
+                $("#infoprogramacion").fadeOut(5000);
+            	//alert('No hay registro alguno');
             }
         });
     });

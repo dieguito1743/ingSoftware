@@ -121,7 +121,6 @@ public class ReporteProgramaciones1DAO implements IBDCrud<ReporteProgramaciones1
                     ps.setString(1, valorCampo.toString());
                     break;
             }
-            System.out.println(SQL_CONSULTAR_TODO_DE);
             rs = ps.executeQuery();
             if (!rs.next()) {
                 objetoArrayList = null;

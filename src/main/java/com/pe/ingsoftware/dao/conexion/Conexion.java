@@ -16,34 +16,35 @@ import java.util.logging.Logger;
  * @author DiegoDavid
  */
 public class Conexion {
-	public static Conexion instance;
-	private Connection cnn;
 
-	private Conexion() {
-		try {
-			// Class.forName("com.mysql.jdbc.Driver");//Driaver mysql
-			Class.forName("org.postgresql.Driver");// Driver postgresql
-			cnn = DriverManager.getConnection("jdbc:postgresql://elmer.db.elephantsql.com/ascfzjiq", "ascfzjiq",
-					"MTQznmJUtG35KuvyiTTNzzniWRGd9jQJ");// URL,USUARIO,CONTRASEÑA
-		} catch (ClassNotFoundException ex) {
-			Logger.getLogger(Conexion.class.getName()).log(Level.SEVERE, null, ex);
-		} catch (SQLException ex) {
-			Logger.getLogger(Conexion.class.getName()).log(Level.SEVERE, null, ex);
-		}
-	}
+    public static Conexion instance;
+    private Connection cnn;
 
-	public synchronized static Conexion crearConexion() {
-		if (instance == null) {
-			instance = new Conexion();
-		}
-		return instance;
-	}
+    private Conexion() {
+        try {
+            // Class.forName("com.mysql.jdbc.Driver");//Driaver mysql
+            Class.forName("org.postgresql.Driver");// Driver postgresql
+            cnn = DriverManager.getConnection("jdbc:postgresql://pellefant.db.elephantsql.com/cvaukjrp", "cvaukjrp",
+                    "FAjrG79pBA1CDxrcLuztKRq-sFWpUjEe");// URL,USUARIO,CONTRASEÑA
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Conexion.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Conexion.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
-	public Connection getCnn() {
-		return cnn;
-	}
+    public synchronized static Conexion crearConexion() {
+        if (instance == null) {
+            instance = new Conexion();
+        }
+        return instance;
+    }
 
-	public void cerrarConexion() {
-		instance = null;
-	}
+    public Connection getCnn() {
+        return cnn;
+    }
+
+    public void cerrarConexion() {
+        instance = null;
+    }
 }

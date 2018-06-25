@@ -3,23 +3,42 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.min.js"></script>
+        <link rel="icon" type="image/png" href="img/favicon.jpg" />
+        <link rel="stylesheet" href="css/iconmoon/style.css">
+        <link rel="stylesheet" href="css/style_login.css">
+        <!--script src="http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.min.js"></script-->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
         <script src="js/login.js"></script>
         <title>Iniciar Sesion</title>
     </head>
     <body>
         <div class="container">
             <h2>Iniciar Sesion</h2>
+            <br/>
             <div class="form-group input-group-sm">
-                <label for="user" class="form-group" >User:</label>
-                <input type="text" id="user" class="form-control" placeholder="Usuario"/>
+                <label for="user" class="form-group" ><span class="icon-user" title="User"></span></label>
+                <div id="sinuse" class="alert alert-warning">
+                <!--a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a-->
+                <strong>CUIDADO!! </strong> No Ingreso Usuario.
+                </div>
+                <input type="text" id="user" class="form-control" placeholder="Usuario" title="Ingrese Usuario"/>
             </div>
+            <br/>
             <div class="form-group input-group-sm">
-                <label for="pass">Password:</label>
-                <input type="password" id="pass" class="form-control" placeholder="Contraseña"/>
+                <label for="pass"><span class="icon-lock" title="Password"></span></label>
+                <div id="sinpass" class="alert alert-warning">
+                <strong>CUIDADO!! </strong> No Ingreso Constraseña.
+                </div>
+                <input type="password" id="pass" class="form-control" placeholder="Contraseña" title="Ingrese Contraseña"/>
             </div>
+            <br/>
             <button id="iniciar" class="btn btn-default">Iniciar Sesion</button>
             <button id="forget" class="btn btn-default">Olvide mi Clave</button>
+            <br />
+            <br />
+            <div id="iru" class="alert alert-info">
+  			<strong>Info!! </strong> No puedes recuperar tu clave.
+			</div>
         </div>
     </body>
 </html>
