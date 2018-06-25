@@ -399,20 +399,37 @@ function verProgramacion() {
                 var programaciones = data;
                 var String1 = '<div id="verprogramaciones" title="Programaciones" style="display:none"></div>';
                 $("#programaciones").append(String1);
+                var string2 = '<div class="form-inline">';
+                var string3 = '<label class="form-control" style="width:60px;font-size:8px;text-align: center;"> Programa </label>';
+                var string4 = '<label class="form-control" style="width:60px;font-size:8px;text-align: center;"> Plan </label>';
+                var string5 = '<label class="form-control" style="width:60px;font-size:8px;text-align: center;"> ciclo </label>';
+                var string6 = '<label class="form-control" style="width:60px;font-size:8px;text-align: center;"> grupo </label>';
+                var string7 = '<label class="form-control" style="width:255px;font-size:8px;text-align: center;"> curso </label>';
+                var string8 = '<label class="form-control" style="width:255px;font-size:8px;text-align: center;"> profesor </label>';
+                var string9 = '</div>';
+                var stringtitulos = string2 + string3 + string4 + string5 + string6 + string7 + string8 + string9;
+                $("#verprogramaciones").append(stringtitulos);
                 $.each(programaciones, function (key, registro) {
                 	var nameprofesor = registro.nameprofesor;
                 	if(nameprofesor == null || nameprofesor == ''){
                 		nameprofesor = 'SIN PROFESOR ASIGNADO';
                 	}
-                    var string2 = '<div class="form-inline">';
-                    var string3 = '<input class="form-control" style="width:338px;" type="text" disabled value="' + registro.namecurso + '" title="' + registro.namecurso + '"/>';
-                    var string4 = '<input type="text" disabled class="form-control" style="width:338px;" value="' + nameprofesor + '" title="' + nameprofesor + '"/>';
-                    var string5 = '</div>';
-                    var stringfinal = string2 + string3 + string4 + string5;
+                	nameprofesor = nameprofesor + ' ' +  registro.lastnameprofesor;
+                	var string2 = '<div class="form-inline">';
+                    var string3 = '<input class="form-control" style="width:60px;font-size:8px;text-align: right;" type="text" disabled value="' + registro.programcurso      + '" title="' + registro.programcurso      + '"/>';
+                    var string4 = '<input class="form-control" style="width:60px;font-size:8px;text-align: right;" type="text" disabled value="' + registro.plancurso         + '" title="' + registro.plancurso         + '"/>';
+                    var string5 = '<input class="form-control" style="width:60px;font-size:8px;text-align: right;" type="text" disabled value="' + registro.cyclecurso        + '" title="' + registro.cyclecurso        + '"/>';
+                    var string6 = '<input class="form-control" style="width:60px;font-size:8px;text-align: right;" type="text" disabled value="' + registro.groupprogramacion + '" title="' + registro.groupprogramacion + '"/>';
+                    var string7 = '<input class="form-control" style="width:255px;font-size:8px;text-align: right;" type="text" disabled value="' + registro.namecurso         + '" title="' + registro.namecurso         + '"/>';
+                    var string8 = '<input class="form-control" style="width:255px;font-size:8px;text-align: right;" type="text" disabled value="' + nameprofesor               + '" title="' + nameprofesor               + '"/>';
+                    var string9 = '</div>';
+                    var stringfinal = string2 + string3 + string4 + string5 + string6 + string7 + string8 + string9;
                     $("#verprogramaciones").append(stringfinal);
                 });
+                $('#verprogramaciones').css('font-size','8px');
                 $('#verprogramaciones').dialog({autoOpen: false});
-                $('#verprogramaciones').dialog('option', 'width', 750);
+                $('#verprogramaciones').dialog('option', 'width', 800);
+                $('#verprogramaciones').dialog('option', 'height', 290);
                 $('#verprogramaciones').dialog('open');
             },
             error: function (data) {

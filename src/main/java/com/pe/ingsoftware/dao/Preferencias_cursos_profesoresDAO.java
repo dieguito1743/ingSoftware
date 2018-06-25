@@ -216,7 +216,52 @@ public class Preferencias_cursos_profesoresDAO implements IBDCrud<Preferencias_c
 
     @Override
     public ArrayList<Preferencias_cursos_profesoresDTO> consultarTodoDe(Object campo1, Object valorCampo1, int tipoCampo1, Object campo2, Object valorCampo2, int tipoCampo2) throws BussinessException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    	ArrayList<Preferencias_cursos_profesoresDTO> ArrayList = new ArrayList();
+        SQL_CONSULTAR_TODO_DE = "SELECT "
+                + "idcurso,idprofesor,cyclepreferencia "
+                + "FROM preferencias_cursos_profesores "
+                + "WHERE " + campo1.toString() + " <> ?";
+        PreparedStatement ps;
+        ResultSet rs;
+        Preferencias_cursos_profesoresDTO preferencias;
+        try {
+            ps = cnn.getCnn().prepareStatement(SQL_CONSULTAR_TODO_DE);
+            switch (tipoCampo1) {
+                case 0:
+                    ps.setInt(1, Integer.parseInt(valorCampo1.toString()));
+                    break;
+                case 1:
+                    ps.setDouble(1, Double.parseDouble(valorCampo1.toString()));
+                    break;
+                case 2:
+                    ps.setString(1, valorCampo1.toString());
+                    break;
+                case 3:
+                    Time time = null;
+                    ps.setTime(1, time.valueOf(valorCampo1.toString()));
+                    break;
+                default:
+                    ps.setString(1, valorCampo1.toString());
+                    break;
+            }
+            rs = ps.executeQuery();
+            if (!rs.next()) {
+                ArrayList = null;
+            } else {
+                do {
+                    preferencias = new Preferencias_cursos_profesoresDTO(rs.getInt(1), rs.getInt(2), rs.getString(3));
+                    ArrayList.add(preferencias);
+                } while (rs.next());
+            }
+            return ArrayList;
+        } catch (SQLException ex) {
+            Logger.getLogger(Preferencias_cursos_profesoresDTO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(Preferencias_cursos_profesoresDTO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            cnn.cerrarConexion();
+        }
+        return ArrayList;
     }
 
 }
