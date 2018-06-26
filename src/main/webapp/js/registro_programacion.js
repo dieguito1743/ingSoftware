@@ -386,11 +386,11 @@ function registrarProgramacion_Horario(idhorarioVal, idprogramacionVal) {
 }
 
 function verProgramacion() {
-	var stored = localStorage['config'];
+    $('#ver').click(function () {
+	    	var stored = localStorage['config'];
     if (stored)
         myVar = JSON.parse(stored);
     $('#programaciones').empty();
-    $('#ver').click(function () {
         $.ajax({
             type: "GET",
             url: '/IngSoftware/programaciones/reporte/'+myVar.cycleconfiguracion,
