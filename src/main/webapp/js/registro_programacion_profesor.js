@@ -162,8 +162,8 @@ function obtenerProfesorDelCurso(idprofaux, idcurso, contador) {
     var String2 = '<div class="row" id="conten'+contador+'"><div class="col-md-4" id="columna1'+contador+'"> </div><div class="col-md-4" id="columna2'+contador+'"> </div><div class="col-md-4" id="columna3'+contador+'"> </div></div>';
     $("#dialog" + contador).append(String2);
     llenarPDP(idprofaux, idcurso, contador);//profesores con disponibilidad por preferencia de cursos
-    llenarPDN(idprofaux, idcurso, contador);
-    setTimeout(function(){ abrirPopup(contador);$('#selprof' + contador).attr("disabled", false);}, 50000);
+    //llenarPDN(idprofaux, idcurso, contador);
+    setTimeout(function(){ abrirPopup(contador);$('#selprof' + contador).attr("disabled", false);}, 5000);
 }
 
 function llenarPDP(idprofaux, idcurso, contador) {
