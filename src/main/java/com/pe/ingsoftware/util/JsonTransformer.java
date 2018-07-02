@@ -5,13 +5,13 @@
 package com.pe.ingsoftware.util;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pe.ingsoftware.interfaces.IJsonTransformer;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.List;
+
 import org.springframework.stereotype.Component;
 
 /**
@@ -21,42 +21,39 @@ import org.springframework.stereotype.Component;
 @Component("jsonTransformer")
 public class JsonTransformer implements IJsonTransformer {
 
-    public JsonTransformer() {
-    }
+	public JsonTransformer() {
+	}
 
-    @Override
-    public String toJson(Object data) {
-        try {
-            ObjectMapper objectMapper = new ObjectMapper();
+	@Override
+	public String toJson(Object data){
+		try {
+			ObjectMapper objectMapper = new ObjectMapper();
 
-            return objectMapper.writeValueAsString(data);
-        } catch (JsonProcessingException ex) {
-            throw new RuntimeException(ex);
-        }//terminar control de errores
-    }
+			return objectMapper.writeValueAsString(data);
+		} catch (JsonProcessingException ex) {
+			throw new RuntimeException(ex);
+		} // terminar control de errores
+	}
 
-    @Override
-    public <Clase> Clase fromJSON(String json, Class<Clase> clase) {
-        try {
-            ObjectMapper objectMapper = new ObjectMapper();
+	@Override
+	public <Clase> Clase fromJSON(String json, Class<Clase> clase){
+		try {
+			ObjectMapper objectMapper = new ObjectMapper();
 
-            return objectMapper.readValue(json, clase);
-        } catch (IOException ex) {
-            throw new RuntimeException(ex);
-        }//terminar control de errores
-    }
+			return objectMapper.readValue(json, clase);
+		} catch (IOException ex) {
+			throw new RuntimeException(ex);
+		} // terminar control de errores
+	}
 
-    @Override
-    public String toJson(ArrayList<String> value) {
-        String jsonString = "{\"plan\":" + value + "}";
+	@Override
+	public <Clase> List<Clase> fromListJSON(String json, Class<Clase> clase){
+		try {
+			ObjectMapper objectMapper = new ObjectMapper();
+			return objectMapper.readValue(json, objectMapper.getTypeFactory().constructCollectionType(ArrayList.class, clase));
+		} catch (Exception ex) {
+			throw new RuntimeException(ex);
+		}
+	}
 
-        ObjectMapper objectMapper = new ObjectMapper();
-        try {
-            JsonNode actualObj = objectMapper.readTree(jsonString);
-            return actualObj.toString();
-        } catch (IOException ex) {
-            Logger.getLogger(JsonTransformer.class.getName()).log(Level.SEVERE, null, ex);
-            throw new RuntimeException(ex);
-        }
-    }
 }

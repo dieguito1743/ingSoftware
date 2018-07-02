@@ -5,6 +5,9 @@
 package com.pe.ingsoftware.interfaces;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import com.pe.ingsoftware.util.BussinessException;
 
 /**
  *
@@ -16,5 +19,5 @@ public interface IJsonTransformer {
 
     <Clase> Clase fromJSON(String json, Class<Clase> clase);
 
-    String toJson(ArrayList<String> value);
+    <Clase> List<Clase> fromListJSON(String json, Class<Clase> clase);
 }

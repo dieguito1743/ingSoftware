@@ -22,6 +22,21 @@
 			<div id = "resultadoFAIL" class="alert alert-danger">
 				<strong>Cuidado!! </strong> No se ha podido Guardar el registro.
 			</div>
+			<div id = "resultadoFAIL2" class="alert alert-danger">
+				<strong>Cuidado!! </strong> No ha selecionado ninguna Opcion
+			</div>
+			<div id = "resultadoFAIL3" class="alert alert-danger">
+				<strong>Cuidado!! </strong> Registre todos los horarios
+			</div>
+			<div id = "resultadoFAIL4" class="alert alert-danger">
+				<strong>Cuidado!! </strong> Las Horas necesarias no coinciden
+			</div>
+			<div id = "resultadoFAIL5" class="alert alert-danger">
+				<strong>Cuidado!! </strong> Cruce de horas en el mismo día
+			</div>
+			<div id="resultadoOK2" class="alert alert-info">
+  				<strong>Info!! </strong> Ya se registraron todos lo cursos de este programa-ciclo
+			</div>
             <div class="form-group">
                 <label for="programa">Programa:</label>
                 <select id="programa" class="form-control">
@@ -65,10 +80,10 @@
                     <option value="sabado">sabado</option>
                     <option value="domingo">domingo</option>
                 </select>
-                <input type="text" id="horainicio1" class="form-control col-sm-3" />
-                <input type="text" id="horafin1" class="form-control col-sm-3" />
+                <input type="text" id="horainicio1" class="form-control col-sm-3" tabindex="1"/>
+                <input type="text" id="horafin1" class="form-control col-sm-3" tabindex="2"/>
                 <button value="agregar" title="agregar horario" id="agregar1" onclick="agregar_restarUno(this.id)" class="btn btn-default col-sm-0">+</button>
-                <button value="restar" title="restar horario" id="restar1" onclick="agregar_restarUno(this.id)" class="btn btn-default col-sm-0">-</button>
+                <button value="restar" title="restar horario" id="restar1" onclick="agregar_restarUno(this.id)" class="btn btn-default col-sm-0" disabled>-</button>
             </div>
             <div id="cuerpo2" class="form-inline">
                 <select id="dia2" class="form-control col-sm-3">
@@ -80,8 +95,8 @@
                     <option value="sabado">sabado</option>
                     <option value="domingo">domingo</option>
                 </select>
-                <input type="text" id="horainicio2" class="form-control col-sm-3" />
-                <input type="text" id="horafin2" class="form-control col-sm-3" />
+                <input type="text" id="horainicio2" class="form-control col-sm-3" tabindex="3"/>
+                <input type="text" id="horafin2" class="form-control col-sm-3" tabindex="4" />
                 <button value="agregar" title="agregar horario" id="agregar2" onclick="agregar_restarUno(this.id)" class="btn btn-default col-sm-0">+</button>
                 <button value="restar" title="restar horario" id="restar2" onclick="agregar_restarUno(this.id)" class="btn btn-default col-sm-0">-</button>
             </div>
@@ -95,9 +110,9 @@
                     <option value="sabado">sabado</option>
                     <option value="domingo">domingo</option>
                 </select>
-                <input type="text" id="horainicio3"  class="form-control col-sm-3" />
-                <input type="text" id="horafin3"  class="form-control col-sm-3" />
-                <button value="agregar" title="agregar horario" id="agregar3" onclick="agregar_restarUno(this.id)" class="btn btn-default col-sm-0">+</button>
+                <input type="text" id="horainicio3"  class="form-control col-sm-3" tabindex="5"/>
+                <input type="text" id="horafin3"  class="form-control col-sm-3" tabindex="6"/>
+                <button value="agregar" title="agregar horario" id="agregar3" onclick="agregar_restarUno(this.id)" class="btn btn-default col-sm-0" disabled>+</button>
                 <button value="restar" title="restar horario" id="restar3" onclick="agregar_restarUno(this.id)" class="btn btn-default col-sm-0">-</button>
             </div>
             <br />

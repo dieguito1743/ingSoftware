@@ -23,7 +23,7 @@ public class ReporteProgramaciones1DAO implements IBDCrud<ReporteProgramaciones1
 
     private static final String SQL_SELECT_ALL = "SELECT "
             + "idprogramacion,idcurso,idprofesor,cycleprogramacion,groupprogramacion,cyclecurso,plancurso,programcurso,namecurso,nameprofesor,lastnameprofesor "
-            + "FROM reporte_programaciones_without_aulas ";
+            + "FROM reporte_programaciones_without_aulas ORDER by programcurso desc, plancurso asc,cyclecurso asc";
     
     private static String SQL_CONSULTAR_TODO_DE = "SELECT "
             + "idprogramacion,idcurso,idprofesor,cycleprogramacion,groupprogramacion,cyclecurso,plancurso,programcurso,namecurso,nameprofesor,lastnameprofesor "
@@ -97,7 +97,7 @@ public class ReporteProgramaciones1DAO implements IBDCrud<ReporteProgramaciones1
         SQL_CONSULTAR_TODO_DE = "SELECT "
             + "idprogramacion,idcurso,idprofesor,cycleprogramacion,groupprogramacion,cyclecurso,plancurso,programcurso,namecurso,nameprofesor,lastnameprofesor "
             + "FROM reporte_programaciones_without_aulas "
-            + "WHERE " + campo.toString() + " = ?";
+            + "WHERE " + campo.toString() + " = ? ORDER by programcurso desc, plancurso asc,cyclecurso asc";
         PreparedStatement ps;
         ResultSet rs;
         ReporteProgramaciones1View profesor;

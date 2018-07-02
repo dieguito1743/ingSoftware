@@ -78,6 +78,56 @@ public class HorariosController {
             }
         }
     }
+    
+    @CrossOrigin
+    @RequestMapping(value = "/horarios/mult", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
+    public void insertar2(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, @RequestBody String jsonEntrada) {
+        try {
+        	HorariosDTO objetoDTO = null;
+            ArrayList<HorariosDTO> arrayList = (ArrayList<HorariosDTO>) jsonTransformer.fromListJSON(jsonEntrada, HorariosDTO.class);
+            int id;
+            if(arrayList != null && !arrayList.isEmpty()) {
+            	for(int i = 0; i < arrayList.size() ; i++) {
+                	objetoDTO = arrayList.get(i);
+                    if ((id = crud.insertar(objetoDTO)) > 0) {
+                    	objetoDTO.setIdhorario(id);
+                    	arrayList.set(i, objetoDTO);
+                    } else {
+                    	httpServletResponse.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                        httpServletResponse.setContentType("application/json; charset=UTF-8");
+                        break;
+                    }
+                }
+                String jsonSalida = jsonTransformer.toJson(arrayList);
+                httpServletResponse.setStatus(HttpServletResponse.SC_OK);
+                httpServletResponse.setContentType("application/json; charset=UTF-8");
+                httpServletResponse.getWriter().println(jsonSalida);
+            }else {
+            	httpServletResponse.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                httpServletResponse.setContentType("application/json; charset=UTF-8");
+            }
+        } catch (BussinessException ex) {
+            List<BussinessMessage> bussinessMessage = ex.getBussinessMessages();
+            String jsonSalida = jsonTransformer.toJson(bussinessMessage);
+
+            httpServletResponse.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            httpServletResponse.setContentType("application/json; charset=UTF-8");
+            try {
+                httpServletResponse.getWriter().println(jsonSalida);
+            } catch (IOException ex1) {
+                //Logger.getLogger(HorariosController.class.getName()).log(Level.SEVERE, null, ex1);
+            }
+
+        } catch (Exception ex) {
+            httpServletResponse.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            httpServletResponse.setContentType("text/plain; charset=UTF-8");
+            try {
+                ex.printStackTrace(httpServletResponse.getWriter());
+            } catch (IOException ex1) {
+                //Logger.getLogger(HorariosController.class.getName()).log(Level.SEVERE, null, ex1);
+            }
+        }
+    }
 
     @CrossOrigin
     @RequestMapping(value = "/horarios/{id}", method = RequestMethod.GET, produces = "application/json")

@@ -76,7 +76,13 @@ function getCurso() {
                 var cursos = data
                 var contador = 1;
                 if (cursos == null) {
-                } else {
+                	$('#resultadoOK2').show();
+    				$('#resultadoOK2').fadeOut(2500);
+                } else if(cursos == undefined){
+                	$('#resultadoOK2').show();
+    				$('#resultadoOK2').fadeOut(2500);
+                }else if(cursos.length > 0){
+                	var semboll = 0;
                     $.each(cursos, function (key, registro) {
                         $.ajax({
                             type: "GET",
@@ -84,7 +90,6 @@ function getCurso() {
                             dataType: "json",
                             success: function (data) {
                                 if (data.idcurso == registro.idcurso && data.idprofesor == 0) {
-                                    //Se carga al Div
                                     var string1 = '<div class="form-inline" id="cuerpo' + contador + '">';
                                     var string2 = '<input class="form-control" style="width:25%;font-size:8px;text-align: left;" type="text" disabled id="' + data.idprogramacion + '" value="' + registro.namecurso + '" title="' + registro.namecurso + '"/>';
                                     var string3 = '<input type="text" disabled id="profesor' + contador + '" class="form-control" style="width:25%;font-size:8px;text-align: left;" />';
@@ -98,15 +103,17 @@ function getCurso() {
                                     $('#cuerpo').show();
                                     contador = contador + 1;
                                     setContador(contador);
-                                } else {
-                                    //No se carga al div
+                                    semboll = 1;
                                 }
                             },
                             error: function (data) {
-                                //alert('error en obtener los cursos registrados');
                             }
                         });
                     });
+                    setTimeout(function(){ if(semboll == 0){
+    					$('#resultadoOK2').show();
+    					$('#resultadoOK2').fadeOut(2500);
+    				}}, 600);
                 }
             },
             error: function (data) {
@@ -119,6 +126,7 @@ function getCurso() {
 function setInit() {
 	$('#infoprogramacion').hide();
     $('#resultadoOK').hide();
+    $('#resultadoOK2').hide();
     $('#resultadoFAIL').hide();
     $("#plan").change(function () {
         var plan = $('select[id=plan]').val();

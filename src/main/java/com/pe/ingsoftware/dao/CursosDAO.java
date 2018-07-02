@@ -284,7 +284,7 @@ public class CursosDAO implements IBDCrud<CursosDTO> {
     @Override
     public ArrayList<CursosDTO> consultarTodoDe(Object campo1, Object valorCampo1, int tipoCampo1, Object campo2, Object valorCampo2, int tipoCampo2) throws BussinessException {
         ArrayList<CursosDTO> ArrayList = new ArrayList();
-        SQL_CONSULTAR_TODO_DE = "SELECT * FROM CURSOS WHERE " + campo1.toString() + " = ? and " + campo2.toString() + " = ?";
+        SQL_CONSULTAR_TODO_DE = "SELECT idcurso,namecurso,codcurso,cyclecurso,plancurso,programcurso,statuscurso FROM CURSOS WHERE " + campo1.toString() + " = ? and " + campo2.toString() + " = ?";
         PreparedStatement ps;
         ResultSet rs;
         CursosDTO ObjetoDTO;
