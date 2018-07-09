@@ -218,9 +218,10 @@ public class Preferencias_cursos_profesoresDAO implements IBDCrud<Preferencias_c
     public ArrayList<Preferencias_cursos_profesoresDTO> consultarTodoDe(Object campo1, Object valorCampo1, int tipoCampo1, Object campo2, Object valorCampo2, int tipoCampo2) throws BussinessException {
     	ArrayList<Preferencias_cursos_profesoresDTO> ArrayList = new ArrayList();
         SQL_CONSULTAR_TODO_DE = "SELECT "
-                + "idcurso,idprofesor,cyclepreferencia "
+                + "distinct 0,idprofesor,cyclepreferencia "
                 + "FROM preferencias_cursos_profesores "
-                + "WHERE " + campo1.toString() + " <> ?";
+                + "WHERE " + campo1.toString() + " <> ? and "
+                + "idprofesor not in (SELECT idprofesor FROM preferencias_cursos_profesores WHERE " + campo1.toString() + " = ?)";
         PreparedStatement ps;
         ResultSet rs;
         Preferencias_cursos_profesoresDTO preferencias;
@@ -229,12 +230,15 @@ public class Preferencias_cursos_profesoresDAO implements IBDCrud<Preferencias_c
             switch (tipoCampo1) {
                 case 0:
                     ps.setInt(1, Integer.parseInt(valorCampo1.toString()));
+                    ps.setInt(2, Integer.parseInt(valorCampo1.toString()));
                     break;
                 case 1:
                     ps.setDouble(1, Double.parseDouble(valorCampo1.toString()));
+                    ps.setDouble(2, Double.parseDouble(valorCampo1.toString()));
                     break;
                 case 2:
                     ps.setString(1, valorCampo1.toString());
+                    ps.setString(2, valorCampo1.toString());
                     break;
                 case 3:
                     Time time = null;
@@ -244,6 +248,7 @@ public class Preferencias_cursos_profesoresDAO implements IBDCrud<Preferencias_c
                     ps.setString(1, valorCampo1.toString());
                     break;
             }
+            //System.out.println(SQL_CONSULTAR_TODO_DE);
             rs = ps.executeQuery();
             if (!rs.next()) {
                 ArrayList = null;

@@ -1,5 +1,6 @@
 // JavaScript Document
 $(document).ready(function() {
+	 $('[data-toggle="tooltip"]').tooltip({placement: "bottom", trigger: "hover"});
 	for(var i = 1; i < 9; i++){
 		$('#00'+i).hide();
 	}

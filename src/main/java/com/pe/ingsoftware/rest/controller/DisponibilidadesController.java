@@ -5,6 +5,7 @@
  */
 package com.pe.ingsoftware.rest.controller;
 
+import com.pe.ingsoftware.dao.HorariosDAO;
 import com.pe.ingsoftware.dto.DisponibilidadesDTO;
 import com.pe.ingsoftware.dto.HorariosDTO;
 import com.pe.ingsoftware.dto.ProgramacionesDTO;
@@ -22,6 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -125,33 +127,58 @@ public class DisponibilidadesController {
     public void consultarDisponibilidadProfesorParaElCurso(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, @PathVariable("idprofesor") String idprofesor, @PathVariable("idcurso") String idcurso) {
         try {//falta validar que sean del mismo ciclo
             boolean retornar = false;//retorna bad request
-            ArrayList<DisponibilidadesDTO> arrayList = crud.consultarTodoDe("idprofesor", idprofesor, 0);
+            ArrayList<DisponibilidadesDTO> arrayListDisponibilidad = crud.consultarTodoDe("idprofesor", idprofesor, 0);//obtenemos todas la disponibilidad del profesor
             ProgramacionesDTO objetoDTO = (ProgramacionesDTO) crud2.consultarUno("idcurso", idcurso, 0);
             ArrayList<Programaciones_horariosDTO> arrayList2 = crud4.consultarTodoDe("idprogramacion", objetoDTO.getIdprogramacion(), 0);
-            if(arrayList2 != null && arrayList != null && objetoDTO != null && !arrayList2.isEmpty()) {
+            //if(arrayList2 != null && arrayListDisponibilidad != null && objetoDTO != null && !arrayList2.isEmpty()) {
                 for (Programaciones_horariosDTO objetoAux : arrayList2) {
                     //hay que pasarle otro parametro cyclehorario para que valide el ciclo del horario pero falta implementar el metodo
-                    ArrayList<HorariosDTO> arrayList3 = crud3.consultarTodoDe("idhorario", objetoAux.getIdhorario(), 0);
-                    if(arrayList3 != null && !arrayList3.isEmpty()) {
-                        for (int i = arrayList.size() - 1; i >= 0; i--) {
-                            for (int y = arrayList3.size() - 1; y >= 0; y--) {
-                                if (arrayList.get(i).getDaydisponibilidad().equalsIgnoreCase(arrayList3.get(y).getDayhorario())) {
-                                    retornar = true;//si hay disponibilidad retornara una respuesta acertada con la disonibilidad del profesor
+                    ArrayList<HorariosDTO> arrayListHorario = crud3.consultarTodoDe("idhorario", objetoAux.getIdhorario(), 0);
+                    //if(arrayListHorario != null && !arrayListHorario.isEmpty()) {
+                        for (int i = 0; i < arrayListHorario.size(); i++) {
+                            for (int y = 0; y < arrayListDisponibilidad.size(); y++) {
+                                if (arrayListDisponibilidad.get(y).getDaydisponibilidad().equalsIgnoreCase(arrayListHorario.get(i).getDayhorario())) {
+                                	int hdi = Integer.parseInt(arrayListDisponibilidad.get(y).getHourstartdisponibilidad().replace(":", "")) - 20000;
+                            		int hdf = Integer.parseInt(arrayListDisponibilidad.get(y).getHourenddisponibilidad().replace(":", "")) + 20000;
+                            		int hpi = Integer.parseInt(arrayListHorario.get(i).getTimestarthorario().replace(":", ""));
+                            		int hpf = Integer.parseInt(arrayListHorario.get(i).getTimeendhorario().replace(":", ""));
+                            		//System.out.println( " " + " idprofesor " + idprofesor + " idprogramacion " +  objetoDTO.getIdprogramacion() +" hdi " + hdi + " hdf "+ hdf + " hpi " + hpi + " hpf " + hpf);
+                            		if(hpi>=hdi && hpf<=hdf) {//le damos dos horas de tolerancia  asu horarios del profe pe
+                        				//si el horario cae dentro del horario del profesor posee disponibilidad
+                        				if(arrayListDisponibilidad.get(y).getStatusdisponibilidad() == 0) {
+                        					//esta libre su horario
+                        					retornar = true;
+                            				break;
+                        				}
+                        				else {
+                        					retornar = false;
+                        					break;
+                        				}
+                        			}else{
+                        				retornar = false;
+                        				break;
+                        			}
                                 }
                             }
+                            break;
                         }
-                    }
+                    //}
+                    break;
                 }
-            }
+            //}
             if (retornar) {
-                String jsonSalida = jsonTransformer.toJson(arrayList);
+                //String jsonSalida = jsonTransformer.toJson(arrayList);
+            	String jsonSalida = "{\"tipo\" : \"0\"}";
 
                 httpServletResponse.setStatus(HttpServletResponse.SC_OK);
                 httpServletResponse.setContentType("application/json; charset=UTF-8");
                 httpServletResponse.getWriter().println(jsonSalida);
             } else {
-                httpServletResponse.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            	String jsonSalida = "{\"tipo\" : \"1\"}";
+
+                httpServletResponse.setStatus(HttpServletResponse.SC_OK);
                 httpServletResponse.setContentType("application/json; charset=UTF-8");
+                httpServletResponse.getWriter().println(jsonSalida);
             }
 
         } catch (BussinessException ex) {
@@ -172,6 +199,68 @@ public class DisponibilidadesController {
                 ex.printStackTrace(httpServletResponse.getWriter());
             } catch (IOException ex1) {
                 //Logger.getLogger(DisponibilidadesController.class.getName()).log(Level.SEVERE, null, ex1);
+            }
+        }
+    }
+    
+    @CrossOrigin
+    @RequestMapping(value = "/disponibilidades/profesor/{idprofesor}/programacion/{idprogramacion}", method = RequestMethod.PUT, produces = "application/json")
+    public void actualizar(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, @RequestBody String jsonEntrada ,@PathVariable("idprofesor") String id, @PathVariable("idprogramacion") String idprogramacion) {
+        boolean retornar = false;
+    	try {//falta validar que son del ciclo correspondiente al configurado
+            ArrayList<Programaciones_horariosDTO> arrayList = crud4.consultarTodoDe("idprogramacion", idprogramacion, 0);
+            ArrayList<DisponibilidadesDTO> arrayLisy2 = crud.consultarTodoDe("idprofesor", id, 0);
+            for(Programaciones_horariosDTO objetoFor : arrayList) {
+            	HorariosDTO objetoDTO = (HorariosDTO) crud3.consultarUno(objetoFor.getIdhorario());
+            	for(DisponibilidadesDTO objetoFor2 :arrayLisy2) {
+            		int hdi = Integer.parseInt(objetoFor2.getHourstartdisponibilidad().replace(":", "")) - 20000;
+            		int hdf = Integer.parseInt(objetoFor2.getHourenddisponibilidad().replace(":", "")) + 2000;
+            		int hpi = Integer.parseInt(objetoDTO.getTimestarthorario().replace(":", ""));
+            		int hpf = Integer.parseInt(objetoDTO.getTimeendhorario().replace(":", ""));
+            		if(objetoDTO.getDayhorario().equalsIgnoreCase(objetoFor2.getDaydisponibilidad())) {
+            			if((hpi >= hdf) || (hdi >= hpf)) {
+            				//no hay cruce
+            			}else{
+            				//hay cruce en el horario y se debe actualizar su disponibilidad
+            				objetoFor2.setStatusdisponibilidad(1);
+            				if(crud.actualizar(objetoFor2, objetoFor2)) {
+            					retornar = true;
+            					break;
+            				}
+            			}
+            		}
+            	}
+            }
+            if (retornar) {
+                String jsonSalida = "{\"resultado\":\"actualizado\"}";
+
+                httpServletResponse.setStatus(HttpServletResponse.SC_OK);
+                httpServletResponse.setContentType("application/json; charset=UTF-8");
+                httpServletResponse.getWriter().println(jsonSalida);
+            } else {
+                httpServletResponse.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                httpServletResponse.setContentType("application/json; charset=UTF-8");
+            }
+
+        } catch (BussinessException ex) {
+            List<BussinessMessage> bussinessMessage = ex.getBussinessMessages();
+            String jsonSalida = jsonTransformer.toJson(bussinessMessage);
+
+            httpServletResponse.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            httpServletResponse.setContentType("application/json; charset=UTF-8");
+            try {
+                httpServletResponse.getWriter().println(jsonSalida);
+            } catch (IOException ex1) {
+                //Logger.getLogger(UsuarioController.class.getName()).log(Level.SEVERE, null, ex1);
+            }
+
+        } catch (Exception ex) {
+            httpServletResponse.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            httpServletResponse.setContentType("text/plain; charset=UTF-8");
+            try {
+                ex.printStackTrace(httpServletResponse.getWriter());
+            } catch (IOException ex1) {
+                //Logger.getLogger(UsuarioController.class.getName()).log(Level.SEVERE, null, ex1);
             }
         }
     }

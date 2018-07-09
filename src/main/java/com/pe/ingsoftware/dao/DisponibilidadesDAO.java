@@ -40,6 +40,10 @@ public class DisponibilidadesDAO implements IBDCrud<DisponibilidadesDTO> {
             + "iddisponibilidad,cycledisponibilidad,daydisponibilidad,hourstartdisponibilidad,hourenddisponibilidad,statusdisponibilidad,idprofesor "
             + "FROM DISPONIBILIDADES "
             + "WHERE ";
+    private static final String SQL_UPDATE = "UPDATE "
+            + "DISPONIBILIDADES "
+            + "SET statusdisponibilidad = ? "
+            + "WHERE iddisponibilidad = ?";
 
     private static final Conexion cnn = Conexion.crearConexion();
 
@@ -50,7 +54,23 @@ public class DisponibilidadesDAO implements IBDCrud<DisponibilidadesDTO> {
 
     @Override
     public boolean actualizar(DisponibilidadesDTO objetoAntiguo, DisponibilidadesDTO objetoActualizar) throws BussinessException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    	boolean retorno = false;
+        PreparedStatement ps;
+        try {
+            ps = cnn.getCnn().prepareStatement(SQL_UPDATE);
+            ps.setInt(1, objetoActualizar.getStatusdisponibilidad());
+            ps.setInt(2, objetoActualizar.getIddisponibilidad());
+            if (ps.executeUpdate() > 0) {
+                retorno = true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DisponibilidadesDTO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(DisponibilidadesDTO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            cnn.cerrarConexion();
+        }
+        return retorno;
     }
 
     @Override

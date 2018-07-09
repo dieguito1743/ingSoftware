@@ -34,42 +34,46 @@ function getPlan() {
 						var valor = $('select[id=programa]').val();
 						$("#plan").empty()
 						$("#curso").empty()
-						$
-								.ajax({
-									type : "GET",
-									url : '/IngSoftware/cursos/planes/' + valor,
-									dataType : "json",
-									success : function(data) {
-										var plan = data
-										if (plan == null) {
-										} else {
-											$("#plan")
-													.append(
-															'<option value="-1" selected>Escoja Plan</option>');
-											$
-													.each(
-															plan,
-															function(key,
-																	registro) {
-																$("#plan")
-																		.append(
-																				'<option value='
-																						+ registro.plancurso
-																						+ '>'
-																						+ registro.plancurso
-																						+ '</option>');
-															});
-										}
-									},
-									error : function(data) {
-										alert('error getPlan');
+						if(valor != '-1'){
+							$.ajax({
+								type : "GET",
+								url : '/IngSoftware/cursos/planes/' + valor,
+								dataType : "json",
+								success : function(data) {
+									var plan = data
+									if (plan == null) {
+									} else {
+										$("#plan")
+												.append(
+														'<option value="-1" selected>Escoja Plan</option>');
+										$
+												.each(
+														plan,
+														function(key,
+																registro) {
+															$("#plan")
+																	.append(
+																			'<option value='
+																					+ registro.plancurso
+																					+ '>'
+																					+ registro.plancurso
+																					+ '</option>');
+														});
 									}
-								});
+								},
+								error : function(data) {
+									alert('error getPlan');
+								}
+							});
+						}
+						
 					});
 }
 function getCurso() {
 	$("#plan").change(function() {
-		obtenerCurso();
+		if($("#plan").val() != '-1'){
+			obtenerCurso();
+		}
 	});
 }
 function obtenerCurso() {
@@ -307,19 +311,33 @@ function setInit() {
 		var plan = $('select[id=plan]').val();
 		var programa = $('select[id=programa]').val();
 		if (plan == "-1") {
-			$("#curso").empty()
+			$("#curso").empty();
+			$('#cuerpo1').hide();
+			$('#cuerpo2').hide();
+			$('#cuerpo3').hide();
+			$('#grupo').val('');
+			$('#horascurso').val('');
 		}
 	});
 	$("#programa").change(function() {
 		var programa = $('select[id=programa]').val();
 		if (programa == "-1") {
-			$("#plan").empty()
-			$("#curso").empty()
+			$("#plan").empty();
+			$("#curso").empty();
+			$('#cuerpo1').hide();
+			$('#cuerpo2').hide();
+			$('#cuerpo3').hide();
+			$('#grupo').val('');
+			$('#horascurso').val('');
 		}
 	});
 	$("#curso").change(function() {
-		var programa = $('select[id=programa]').val();
-		if (programa == "-1") {
+		$('#grupo').val('1');
+		var curso = $('select[id=curso]').val();
+		console.log(curso);
+		if (curso == "-1") {
+			$('#grupo').val('');
+			$('#horascurso').val('');
 			$('#cuerpo1').hide();
 			$('#cuerpo2').hide();
 			$('#cuerpo3').hide();
@@ -662,6 +680,7 @@ function registrarProgramacion(horario, cyclehorarioVal) {
 			$('#horainicio3').val('');
 			$('#horafin3').val('');
 			$('#horascurso').val('');
+			$('#grupo').val('');
 			$('#cuerpo1').hide()
 			$('#cuerpo2').hide()
 			$('#cuerpo3').hide()

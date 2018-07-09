@@ -16,27 +16,6 @@
     </head>
     <body>
         <div class="container">
-            <div id="resultadoOK" class="alert alert-info">
-  				<strong>Info!! </strong> Se Registro Perfectamente.
-			</div>
-			<div id = "resultadoFAIL" class="alert alert-danger">
-				<strong>Cuidado!! </strong> No se ha podido Guardar el registro.
-			</div>
-			<div id = "resultadoFAIL2" class="alert alert-danger">
-				<strong>Cuidado!! </strong> No ha selecionado ninguna Opcion
-			</div>
-			<div id = "resultadoFAIL3" class="alert alert-danger">
-				<strong>Cuidado!! </strong> Registre todos los horarios
-			</div>
-			<div id = "resultadoFAIL4" class="alert alert-danger">
-				<strong>Cuidado!! </strong> Las Horas necesarias no coinciden
-			</div>
-			<div id = "resultadoFAIL5" class="alert alert-danger">
-				<strong>Cuidado!! </strong> Cruce de horas en el mismo día
-			</div>
-			<div id="resultadoOK2" class="alert alert-info">
-  				<strong>Info!! </strong> Ya se registraron todos lo cursos de este programa-ciclo
-			</div>
             <div class="form-group">
                 <label for="programa">Programa:</label>
                 <select id="programa" class="form-control">
@@ -49,7 +28,7 @@
             </div>
             <div class="form-group">
                 <label for="grupo">Grupo:</label>
-                <input type="text" disabled id="grupo" class="form-control"  value="1"/>
+                <input type="text" disabled id="grupo" class="form-control"/>
             </div>
             <div class="form-group">
                 <label for="curso">Curso:</label>
@@ -58,7 +37,7 @@
             </div>
             <div class="form-group">
                 <label for="curso">Horas necesarias:</label>
-                <input id="horascurso" type="text" disabled id="grupo" class="form-control"  value=""/>
+                <input id="horascurso" type="text" disabled  class="form-control"  value=""/>
             </div>
         </div>
 
@@ -118,6 +97,27 @@
             <br />
             <button value="guardar" title="guardar horario" id ="guardar" class="btn btn-warning">Guardar</button>
             <button value="ver" title="ver cursos registrados" id ="ver" class="btn btn-warning">Ver Cursos Registrados</button>
+            <div id="resultadoOK" class="alert alert-info">
+  				<strong>Info!! </strong> Se Registro Perfectamente.
+			</div>
+			<div id = "resultadoFAIL" class="alert alert-danger">
+				<strong>Cuidado!! </strong> No se ha podido Guardar el registro.
+			</div>
+			<div id = "resultadoFAIL2" class="alert alert-danger">
+				<strong>Cuidado!! </strong> No ha selecionado ninguna Opcion
+			</div>
+			<div id = "resultadoFAIL3" class="alert alert-danger">
+				<strong>Cuidado!! </strong> Registre todos los horarios
+			</div>
+			<div id = "resultadoFAIL4" class="alert alert-danger">
+				<strong>Cuidado!! </strong> Las Horas necesarias no coinciden
+			</div>
+			<div id = "resultadoFAIL5" class="alert alert-danger">
+				<strong>Cuidado!! </strong> Cruce de horas en el mismo día
+			</div>
+			<div id="resultadoOK2" class="alert alert-info">
+  				<strong>Info!! </strong> Ya se registraron todos lo cursos de este programa-ciclo
+			</div>
             <div id="infoprogramacion" class="alert alert-info">
   				<strong>Info!! </strong> No hay registro de ningún curso.
 			</div>
