@@ -100,7 +100,7 @@ public class ReporteProgramaciones1DAO implements IBDCrud<ReporteProgramaciones1
             + "WHERE " + campo.toString() + " = ? ORDER by programcurso desc, plancurso asc,cyclecurso asc";
         PreparedStatement ps;
         ResultSet rs;
-        ReporteProgramaciones1View profesor;
+        ReporteProgramaciones1View reporte;
         try {
             ps = cnn.getCnn().prepareStatement(SQL_CONSULTAR_TODO_DE);
             switch (tipoCampo) {
@@ -126,8 +126,8 @@ public class ReporteProgramaciones1DAO implements IBDCrud<ReporteProgramaciones1
                 objetoArrayList = null;
             } else {
                 do {
-                    profesor = new ReporteProgramaciones1View(rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getInt(4), rs.getInt(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getString(10), rs.getString(11));
-                    objetoArrayList.add(profesor);
+                    reporte = new ReporteProgramaciones1View(rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getInt(4), rs.getInt(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getString(10), rs.getString(11));
+                    objetoArrayList.add(reporte);
                 } while (rs.next());
             }
             return objetoArrayList;

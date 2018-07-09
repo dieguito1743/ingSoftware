@@ -95,7 +95,7 @@ function getCurso() {
                                     var string3 = '<input type="text" disabled id="profesor' + contador + '" class="form-control" style="width:25%;font-size:8px;text-align: left;" />';
                                     var string4 = '<button value="profesor" id="selprof' + contador + '" onclick="elegirProfesor(' + registro.idcurso + ',' + contador + ')" title="buscar profesor" class="btn btn-default" >P</button>';
                                     var string5 = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
-                                    var string6 = '<input class="checkbox" type="checkbox" id="fucionpc' + contador + '"  />';
+                                    var string6 = '<input class="checkbox" type="checkbox" id="fucionpc' + contador + '" disabled />';
                                     var string7 = '</div>';
                                     var string8 = '<div id="dialog' + contador + '" title="Profesores" style="display:none;font-size:8px;"></div>';
                                     var stringfinal = string1 + string2 + string3 + string4 + string5 + string6 + string7 + string8;
@@ -146,10 +146,6 @@ function setInit() {
 
 function elegirProfesor(idcur, contador) {
     obtenerProfesorDelCurso(idcur, contador);
-    var idcurso = {
-        idcurso: idcur
-    };
-    localStorage['curso'] = JSON.stringify(idcurso);
 }
 
 function abrirPopup(contador) {

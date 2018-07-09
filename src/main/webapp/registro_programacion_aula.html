@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" type="text/javascript"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.2.43/jquery.form-validator.min.js" type="text/javascript"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.0/jquery.mask.js" type="text/javascript"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+    <script src="js/registro_programacion_aula.js"></script>
+	<title></title>
+</head>
+	<body>
+		<div class="container">
+            <div class="form-group">
+                <label for="programa">Programa:</label>
+                <select id="programa" class="form-control">
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="plan">Plan Academico:</label>
+                <select id="plan" class="form-control">
+                </select>
+            </div>
+        </div>
+        <div class="container">
+            <div id="cabecera" class="form-inline">
+                <label class="control-label col-sm-3"> Curso </label>
+                <label class="control-label col-sm-4"> Profesor </label>
+                <label class="control-label col-sm-3"> Aula </label>
+                <label class="control-label col-sm-0"> Horario </label>
+            </div>
+            <br />
+            <div id="cuerpo">
+            </div>
+            <br />
+            <button id="guardar" title="guardar curso_profesor_horario" value="guardar" class="btn btn-warning">Guardar</button>
+            <button value="ver" title="ver cursos registrados" id="ver" class="btn btn-warning">Ver Cursos Registrados</button>
+            <div id="resultadoOK" class="alert alert-info">
+  				<strong>Info!! </strong> Se Registro Perfectamente.
+			</div>
+			<div id = "resultadoFAIL" class="alert alert-danger">
+				<strong>Cuidado!! </strong> No se ha podido Guardar el registro.
+			</div>
+			<div id="resultadoOK2" class="alert alert-info">
+  				<strong>Info!! </strong> Ya se registraron todas los horarios a un aula respectiva
+			</div>
+            <div id="infoprogramacion" class="alert alert-info">
+  				<strong>Info!! </strong> No hay registro de ningún curso.
+			</div>
+            <div id="programaciones"></div>
+        </div>
+	</body>
+</html>
