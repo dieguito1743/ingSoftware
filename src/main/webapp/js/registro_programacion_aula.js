@@ -97,13 +97,14 @@ function getCurso() {
                     		var string1 = '<div class="form-inline" id="cuerpo' + contador + '">';
                             var string2 = '<input class="form-control" style="width:25%;font-size:8px;text-align: left;" type="text" disabled id="' + registro.idprogramacion + '" value="' + registro.namecurso + '" title="' + registro.namecurso + '"/>';
                             var string3 = '<input type="text" disabled id="profesor' + contador + '" class="form-control" style="width:25%;font-size:8px;text-align: left;" value="' + name + '" />';
-                            var string4 = '<input type="text" disabled id="aula' + contador + '" class="form-control" style="width:25%;font-size:8px;text-align: left;" />';
-                            var string5 = '<button value="profesor" id="selaula' + contador + '" onclick="elegirAula(' + registro.idprogramacion + ',' + contador + ')" title="buscar aula disponible" class="btn btn-default" >Aula</button>';
-                            var string6 = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
-                            var string7 = '';
-                            var string8 = '</div>';
-                            var string9 = '<div id="dialog' + contador + '" title="Aulas" style="display:none;font-size:8px;"></div>';
-                            var stringfinal = string1 + string2 + string3 + string4 + string5 + string6 + string7 + string8 + string9;
+                            var string4 = '<input type="text" disabled id="aula' + contador + '" class="form-control" style="width:15%;font-size:8px;text-align: left;" />';
+                            var string5 = '<input type="text" disabled id="horario' + contador + '" class="form-control" style="width:15%;font-size:8px;text-align: left;" value="' + registro.dayhorario + ' ' + registro.timestarthorario.substring(0,4)+' - '+ registro.timeendhorario.substring(0,4)+ '" />';
+                            var string6 = '<button value="profesor" id="selaula' + contador + '" onclick="elegirAula(' + registro.idprogramacion + ','+ registro.idhorario + ',' + contador + ')" title="buscar aula disponible" class="btn btn-default" >Aula</button>';
+                            var string7 = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+                            var string8 = '';
+                            var string9 = '</div>';
+                            var string10 = '<div id="dialog' + contador + '" title="Selec. Aula" style="display:none;font-size:8px;"></div>';
+                            var stringfinal = string1 + string2 + string3 + string4 + string5 + string6 + string7 + string8 + string9 + string10;
                             $('#cuerpo').append(stringfinal);
                             $('#cuerpo').show();
                             contador = contador + 1;
@@ -208,7 +209,7 @@ function verProgramacion() {
     });
 }
 
-function elegirAula(idprogramacion, contador){
+function elegirAula(idprogramacion, idhorario, contador){
 	$('#selaula' + contador).attr("disabled", true);
     $("#dialog" + contador).empty();
     var String1 = '<div id="titulo'+contador+'"><div class="form-control">Aulas Disponibles</div></div>';
@@ -216,7 +217,7 @@ function elegirAula(idprogramacion, contador){
     $("#dialog" + contador).append(String1);
     var String2 = '<div id="conten'+contador+'"><div id="columna1'+contador+'"> </div></div>';
     $("#dialog" + contador).append(String2);
-    llenarAulas(idprogramacion, contador);//profesores con disponibilidad por preferencia de cursos
+    llenarAulas(idprogramacion, idhorario, contador);//profesores con disponibilidad por preferencia de cursos
     //setTimeout(function(){ abrirPopup(contador);$('#selaula' + contador).attr("disabled", false);}, 15000);
 }
 
@@ -230,7 +231,7 @@ function abrirPopup(contador) {
     });
 }
 
-function llenarAulas(idprogramacion, contador) {
+function llenarAulas(idprogramacion, idhorario, contador) {
     $.ajax({
         type: "GET",
         url: '/IngSoftware/aulas',///programacion/' + idprogramacion,
@@ -239,7 +240,7 @@ function llenarAulas(idprogramacion, contador) {
             var aulas = data;
             //console.log(data);
             $.each(aulas, function (key, registro) {
-            	$("#columna1" + contador).append('<input class="form-control" type="text" readonly value="' + registro.numberaula + ' ' + registro.pavilionaula + '" id="' + registro.idaula + '" onclick="enviarAula(this.id, this.value,' + idprogramacion + ',' + contador + ')" style="8px;font-size:8px;text-align: right;"/>');
+            	$("#columna1" + contador).append('<input class="form-control" type="text" readonly value="' + registro.numberaula + ' ' + registro.pavilionaula + '" id="' + registro.idaula + '" onclick="enviarAula(this.id, this.value,' + idprogramacion + ',' + idhorario + ',' + contador + ')" style="8px;font-size:8px;text-align: right;"/>');
             });
             abrirPopup(contador);
             $('#selaula' + contador).attr("disabled", false);
@@ -250,9 +251,10 @@ function llenarAulas(idprogramacion, contador) {
     });
 }
 
-function enviarAula(idaula, fullaula, idprogramacion, contador) {
+function enviarAula(idaula, fullaula, idprogramacion, idhorario, contador) {
     $('#aula' + contador).attr("value", fullaula);
     $('#aula' + contador).attr("id2", idaula);
+    $('#aula' + contador).attr("id3", idhorario);
 }
 
 function registrarProgramacion_aula() {
@@ -264,7 +266,9 @@ function registrarProgramacion_aula() {
         for (var i = 1; i < getContador(); i++) {
             //salen en pares el primero es idprogramacion y el segundo el idprofesorse debe actualizar la BD
             var dataOut = {idprogramacion: 'sin Asignar',
-                idaula: 'sin Asignar'};
+                idaula: 'sin Asignar',
+                idhorario : 'sin Asignar',
+                idusuario : myVar.idusuario};
             $('#cuerpo' + i + ' input[type="text"]').each(function (index) {
                 console.log(index + ' ' +  $(this).attr("id"));
                 if (index == 0) {
@@ -275,12 +279,35 @@ function registrarProgramacion_aula() {
                 }
                 if (index == 2) {
                     dataOut.idaula = $(this).attr("id2");
+                    dataOut.idhorario = $(this).attr("id3");
                 }
             });
             console.log(dataOut);
             if (!isNaN(dataOut.idprogramacion) && !isNaN(dataOut.idaula)) {
-            	//registrarProgramacion_Aula(dataOut, i);
+            	registrarProgramacion_Aula(dataOut, i);
             }
+        }
+    });
+}
+
+function registrarProgramacion_Aula(dataOut, aux){
+	$.ajax({
+        type: "POST",
+        contentType: "application/json",
+        url: '/IngSoftware/aula/programacion/horario/usuario',
+        dataType: "json",
+        data: JSON.stringify(dataOut),
+        success: function (data) {
+            var programacion = data;
+            console.log(aux);
+            $('#cuerpo' + aux).remove();
+            $('#resultadoOK').show();
+            $("#resultadoOK").fadeOut(8000);
+        },
+        error: function (data) {
+            $('#resultadoFAIL').show();
+            $("#resultadoFAIL").fadeOut(8000);
+            return;
         }
     });
 }
