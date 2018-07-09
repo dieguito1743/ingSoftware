@@ -28,7 +28,7 @@ public class Programaciones_aulasDAO implements IBDCrud<Programaciones_aulasDTO>
 
 	
 	private static final String SQL_INSERT = "INSERT "
-            + "INTO programaciones "
+            + "INTO programaciones_aulas "
             + "(idprogramacion, idaula, idhorario, idusuario) "
             + "VALUES (?,?,?,?) ";
 	private static final Conexion cnn = Conexion.crearConexion();

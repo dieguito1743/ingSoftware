@@ -265,12 +265,12 @@ function registrarProgramacion_aula() {
         var aux = 0;
         for (var i = 1; i < getContador(); i++) {
             //salen en pares el primero es idprogramacion y el segundo el idprofesorse debe actualizar la BD
-            var dataOut = {idprogramacion: 'sin Asignar',
-                idaula: 'sin Asignar',
-                idhorario : 'sin Asignar',
+            var dataOut = {idprogramacion: 'sn',
+                idaula: 'sn',
+                idhorario : 'sn',
                 idusuario : myVar.idusuario};
             $('#cuerpo' + i + ' input[type="text"]').each(function (index) {
-                console.log(index + ' ' +  $(this).attr("id"));
+                //console.log(index + ' ' +  $(this).attr("id"));
                 if (index == 0) {
                     dataOut.idprogramacion = $(this).attr("id");
                 }
@@ -282,15 +282,16 @@ function registrarProgramacion_aula() {
                     dataOut.idhorario = $(this).attr("id3");
                 }
             });
-            console.log(dataOut);
+            //console.log(dataOut);
             if (!isNaN(dataOut.idprogramacion) && !isNaN(dataOut.idaula)) {
-            	registrarProgramacion_Aula(dataOut, i);
+            	guardaProgramacion_Aula(dataOut, i);
             }
         }
     });
 }
 
-function registrarProgramacion_Aula(dataOut, aux){
+function guardaProgramacion_Aula(dataOut, aux){
+	console.log(dataOut);
 	$.ajax({
         type: "POST",
         contentType: "application/json",
