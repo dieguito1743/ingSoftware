@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" type="text/javascript"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.2.43/jquery.form-validator.min.js" type="text/javascript"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.0/jquery.mask.js" type="text/javascript"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+    <script src="js/busqueda.js"></script>
+	<title></title>
+</head>
+	<body>
+	<div class= "container">
+		<div class="row">
+		<div class ="col-md-5">
+			<div class="form-group input-group-sm">
+		            <label for="profesor" class="form-group" ><span class="icon-search" title="profesor"></span></label>
+		            <input type="text" id="profesor" class="form-control" data-toggle="tooltip" placeholder="Ingrese Profesor" title="Ingrese Profesor"/>
+	        </div>
+		</div>
+		<div class ="col-md-5">
+			<div class="form-group input-group-sm">
+	            <label for="curso" class="form-group" ><span class="icon-search" title="curso"></span></label>
+	            <input type="text" id="curso" class="form-control" data-toggle="tooltip" placeholder="Ingrese curso" title="Ingrese curso"/>
+	        </div>
+		</div>
+        </div>
+        <div class = "row">
+        	<div id="sinresult" class="alert alert-warning">
+	            <!--a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a-->
+	            <strong>CUIDADO!! </strong> No se encontro ningún resultado
+            </div>
+        </div>
+        <div class = "row">
+        <button id="buscar" title="guardar curso_profesor_horario" value="buscar" class="btn btn-warning">Buscar</button>
+        </div>
+        <div class = "row" id="resultados">
+        </div>
+	</div>
+	</body>
+</html>
